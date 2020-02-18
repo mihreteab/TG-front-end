@@ -1,0 +1,11 @@
+.auth-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background:linear-gradient(0deg, rgba(103, 71, 68, 0.5), rgba(103, 71, 68, 0.5)), url('../../assets/images/auth-background.jpg');
+  // background: url('../../assets/images/auth-background.jpg');
+  background-position: center;
+  // filter: blur(5px);
+}
