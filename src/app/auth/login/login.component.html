@@ -1,1 +1,8 @@
-<p>login works!</p>
+<div class="login-container pt-5 pb-5 pr-4 pl-4">
+    <img class="logo mb-5" src="../../../assets/images/logo.png"/>
+    <input class="mt-3 mb-3 p-3" name="email" type="email" placeholder="Email"/>
+    <input class="mt-2 mb-2 p-3" name="password" type="password" placeholder="Password" />
+    <a [routerLink]="['/auth/forgot-password']" class="forgot-text text-success pr-2">Forgot Password?</a>
+    <button class="btn btn-login btn-success mt-5 mb-3">Login</button>
+    <span class="text-signup">Don't have an account? <a [routerLink]="['/auth/signup']" class="btn-signup text-success">Register</a></span>
+</div>
