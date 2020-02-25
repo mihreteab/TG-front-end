@@ -1,5 +1,36 @@
 <div>
   <div class="row">
+    <div class="col-xxl-4 col-md-6 col-sm-12">
+      <nb-card class="status-nb-card">
+        <div class="icon-container">
+          <nb-icon class="icon" icon="bar-chart-2-outline"></nb-icon>
+        </div>
+        <div class="details">
+          <div class="title h5">SWISS COM LTE</div>
+        </div>
+      </nb-card>
+    </div>
+    <div class="col-xxl-4 col-md-6 col-sm-12">
+      <nb-card class="status-nb-card">
+        <div class="icon-container">
+          <nb-icon class="icon" icon="clock-outline"></nb-icon>
+        </div>
+        <div class="details">
+          <div class="title h5">15:33</div>
+          <div class="title h5">UTC + 1</div>
+        </div>
+      </nb-card>
+    </div>
+    <div class="col-xxl-4 col-md-6 col-sm-12">
+      <nb-card class="status-nb-card">
+        <div class="icon-container">
+          <!-- <nb-icon class="icon" icon="bar-chart-2-outline"></nb-icon> -->
+        </div>
+        <div class="details">
+          <!-- <div class="title h5">SWISS COM LTE</div> -->
+        </div>
+      </nb-card>
+    </div>
     <div class="col-12">
       <nb-card>
         <nb-card-body>
@@ -61,10 +92,53 @@
               >
               </radial-gauge>
             </div>
-            <div class="col-md-12">
-              <div class="map match-parent" id="map"></div>
-            </div>
           </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-12">
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+              <div class="col-md-12">
+                <div class="map match-parent" id="map"></div>
+              </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-3">
+      <nb-card>
+        <nb-card-header>Live Sensors</nb-card-header>
+        <nb-card-body>
+          <chart type="line" [data]="sensorsData" [options]="liveSensorsOptions"></chart>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-3">
+      <nb-card>
+        <nb-card-header>Temperature</nb-card-header>
+        <nb-card-body>
+          <div class="d-flex">
+            <linear-gauge width="50" height="150"></linear-gauge>
+            <chart type="line" [data]="sensorsData" [options]="liveSensorsOptions"></chart>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-3">
+      <nb-card>
+        <nb-card-header>Live Sensors</nb-card-header>
+        <nb-card-body>
+          <chart type="line" [data]="sensorsData" [options]="liveSensorsOptions"></chart>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-3">
+      <nb-card>
+        <nb-card-header>Live Sensors</nb-card-header>
+        <nb-card-body>
+          <chart type="line" [data]="sensorsData" [options]="liveSensorsOptions"></chart>
         </nb-card-body>
       </nb-card>
     </div>
