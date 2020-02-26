@@ -1,12 +1,13 @@
 import {Component, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { takeUntil, map, takeWhile, switchMap } from 'rxjs/operators';
+import { Subject, Observable, interval } from 'rxjs';
 import { SensorService } from '../../@core/mock/sensor.service';
-import { SensorData } from '../../@core/data/sensor';
+import { ChartService } from '../../@core/mock/chart.service';
 
 import * as mapboxgl from 'mapbox-gl';
 import { NbThemeService, NbColorHelper } from '@nebular/theme';
+import { LiveChart } from '../../@core/data/chart';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -16,24 +17,31 @@ import { NbThemeService, NbColorHelper } from '@nebular/theme';
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
+  private alive = true;
 
-  sensor: SensorData;
+  private intervalSubscription: any;
+  sensor$: any;
   map: mapboxgl.Map;
 
   themeSubscription: any;
-  liveSensorsOptions: any = {};
-  sensorsData: any = {};
 
-  constructor(private sensorService: SensorService, private theme: NbThemeService) {
+  speedLiveChartData: any;
+
+  msla$: Observable<number>;
+  speed$: Observable<number>;
+  acceleration$: Observable<number>;
+  compass$: Observable<number>;
+
+  constructor(
+    private sensorService: SensorService,
+    private chartService: ChartService,
+    private theme: NbThemeService,
+  ) {
 
   }
 
   ngOnInit() {
-    this.sensorService.getSensor()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((sensor: SensorData) => {
-        this.sensor = sensor
-      });
+    this.sensor$ = this.sensorService.getSensor()
 
     mapboxgl.accessToken = environment.mapbox.accessToken;
     this.map = new mapboxgl.Map({
@@ -54,59 +62,57 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       .setPopup(popup)
       .addTo(this.map);
+
+    
+    this.getLiveChartData();
   }
+
+  private getLiveChartData() {
+
+    this.chartService.getInitialLiveChartData('speed')
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((data: any) => {
+        this.speedLiveChartData = data.liveChart;
+        this.startReceivingLiveData('speed');
+      })
+  }
+
+  startReceivingLiveData(type: string) {
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+    }
+
+    this.intervalSubscription = interval(200)
+      .pipe(
+        takeWhile(() => this.alive),
+        switchMap(() => this.chartService.getLiveChartData(type)),
+      )
+      .subscribe((liveChartData: any[]) => {
+        this.speedLiveChartData = [...liveChartData];
+      });
+  }
+
 
 
   ngAfterViewInit() {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
-      const colors: any = config.variables;
-      const chartjs: any = config.variables.chartjs;
+      this.msla$ = interval(1000).pipe(
+        map(() => Math.floor(Math.random() * 100) + 1500)
+      );
+  
+      this.speed$ = interval(1000).pipe(
+        map(() => Math.floor(Math.random() * 20) + 80)
+      );
+  
+      this.acceleration$ = interval(1000).pipe(
+        map(() => Math.random() + 0.2)
+      );
+  
+      this.compass$ = interval(1000).pipe(
+        map(() => Math.floor(Math.random() * 120) + 20)
+      );
 
-      this.sensorsData = {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-          data: [65, 59, 80, 81, 56, 55, 40],
-          label: 'Series A',
-          backgroundColor: NbColorHelper.hexToRgbA(colors.primary, 0.3),
-          borderColor: colors.primary,
-        }
-        ],
-      };
-
-      this.liveSensorsOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          xAxes: [
-            {
-              gridLines: {
-                display: true,
-                color: chartjs.axisLineColor,
-              },
-              ticks: {
-                fontColor: chartjs.textColor,
-              },
-            },
-          ],
-          yAxes: [
-            {
-              gridLines: {
-                display: true,
-                color: chartjs.axisLineColor,
-              },
-              ticks: {
-                fontColor: chartjs.textColor,
-              },
-            },
-          ],
-        },
-        legend: {
-          labels: {
-            fontColor: chartjs.textColor,
-          },
-        },
-      };
     });
   }
 

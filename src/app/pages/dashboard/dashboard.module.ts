@@ -5,6 +5,9 @@ import { DashboardComponent } from './dashboard.component';
 import { ThemeModule } from '../../@theme/theme.module';
 import { NbCardModule, NbIconModule } from '@nebular/theme';
 import { MomentTimezoneModule } from 'angular-moment-timezone';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { LiveChartComponent } from './components/live-chart/live-chart.component';
+
 
 @NgModule({
   imports: [
@@ -14,9 +17,11 @@ import { MomentTimezoneModule } from 'angular-moment-timezone';
     GaugesModule,
     MomentTimezoneModule,
     ChartModule,
+    NgxEchartsModule,
   ],
   declarations: [
     DashboardComponent,
+    LiveChartComponent,
   ],
 })
 export class DashboardModule { }

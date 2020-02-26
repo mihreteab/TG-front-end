@@ -6,7 +6,7 @@ import { Contacts, RecentUsers, UserData } from '../data/users';
 export class UserService extends UserData {
 
   private time: Date = new Date;
-
+  speed: number = 120
   private users = {
     kate: {
       name: 'Kate Martinez',

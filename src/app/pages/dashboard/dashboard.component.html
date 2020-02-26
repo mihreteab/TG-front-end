@@ -1,6 +1,6 @@
 <div>
   <div class="row">
-    <div class="col-xxl-4 col-md-6 col-sm-12">
+    <div class="col-xxl-3 col-md-6 col-sm-12">
       <nb-card class="status-nb-card">
         <div class="icon-container">
           <nb-icon class="icon" icon="bar-chart-2-outline"></nb-icon>
@@ -10,7 +10,7 @@
         </div>
       </nb-card>
     </div>
-    <div class="col-xxl-4 col-md-6 col-sm-12">
+    <div class="col-xxl-3 col-md-6 col-sm-12">
       <nb-card class="status-nb-card">
         <div class="icon-container">
           <nb-icon class="icon" icon="clock-outline"></nb-icon>
@@ -21,7 +21,7 @@
         </div>
       </nb-card>
     </div>
-    <div class="col-xxl-4 col-md-6 col-sm-12">
+    <div class="col-xxl-3 col-md-6 col-sm-12">
       <nb-card class="status-nb-card">
         <div class="icon-container">
           <!-- <nb-icon class="icon" icon="bar-chart-2-outline"></nb-icon> -->
@@ -31,71 +31,134 @@
         </div>
       </nb-card>
     </div>
-    <div class="col-12">
+    <div class="col-xxl-3 col-md-6 col-sm-12">
+      <nb-card class="status-nb-card">
+        <div class="icon-container">
+        </div>
+        <div class="details">
+        </div>
+      </nb-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xxl-3 col-md-6 col-sm-12">
       <nb-card>
-        <nb-card-body>
-          <div class="row">
-            <div class="col-md-12 d-flex flex-column flex-sm-row align-items-center d-flex-row">
-              <radial-gauge
-                class="m-3"
-                width="200"
-                height="200"
-                min-value="0"
-                max-value="240"
-                major-ticks="0,40,80,120,160,200,240"
-                value="165.23"
-                units="Km/h"
-                highlights='[
-                  {"from": 120, "to": 200, "color": "rgba(50, 200, 50, .3)"},
-                  {"from": 200, "to": 240, "color": "rgba(255, 0, 0, .3)"}
-                ]'
-              ></radial-gauge>
-              <radial-gauge
-                class="m-3"
-                width="200"
-                height="200"
-                min-value="0"
-                max-value="360"
-                major-ticks="N,NE,E,ES,S,SW,W,WN,N"
-                minor-ticks="10"
-                ticks-angle="360"
-                start-angle="180"
-                stroke-ticks="false"
-                highlights="false"
-                color-plate="white"
-                color-major-ticks="#000"
-                color-minor-ticks="#000"
-                color-numbers="#000"
-                color-needle="#000"
-                color-needle-end="#000"
-                numbers-margin="2"
-                font-numbers-size="30"
-                color-needle-shadow-down="false"
-                color-needle-circle-outer="#000"
-                color-circle-inner="false"
-                value-box="false"
-                value-text-shadow="false"
-                needle-circle-size="7"
-                animation-rule="linear"
-                needle-type="line"
-                needle-start="75"
-                needle-end="99"
-                needle-width="3"
-                borders="true"
-                border-inner-width="3"
-                border-middle-width="1"
-                border-outer-width="5"
-                    border-shadow-width="0"
-                animation-duration="1500"
-                animation-target="plate"
-                value="80"
-              >
-              </radial-gauge>
-            </div>
-          </div>
+        <nb-card-header>
+          Speed
+        </nb-card-header>
+        <nb-card-body class="d-flex align-items-center justify-content-center">
+          <radial-gauge
+            width="300"
+            height="300"
+            min-value="0"
+            max-value="240"
+            major-ticks="0,40,80,120,160,200,240"
+            [value]="(speed$ | async)"
+            units="Km/h"
+            highlights='[
+              {"from": 120, "to": 200, "color": "rgba(50, 200, 50, .3)"},
+              {"from": 200, "to": 240, "color": "rgba(255, 0, 0, .3)"}
+            ]'
+          ></radial-gauge>
         </nb-card-body>
       </nb-card>
     </div>
+    <div class="col-xxl-3 col-md-6 col-sm-12">
+      <nb-card>
+        <nb-card-header>
+          Acceleration
+        </nb-card-header>
+        <nb-card-body class="d-flex align-items-center justify-content-center">
+          <radial-gauge
+            width="300"
+            height="300"
+            min-value="-5"
+            max-value="15"
+            major-ticks="-5,0,5,10,15"
+            [value]="(acceleration$ | async)"
+            units="m/s²"
+            highlights='[
+              {"from": -5, "to": 0, "color": "rgba(255, 0, 0, .3)"},
+              {"from": 0, "to": 10, "color": "rgba(50, 200, 50, .3)"},
+              {"from": 10, "to": 15, "color": "rgba(255, 0, 0, .3)"}
+            ]'
+          ></radial-gauge>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-xxl-3 col-md-6 col-sm-12">
+      <nb-card>
+        <nb-card-header>
+          Msla
+        </nb-card-header>
+        <nb-card-body class="d-flex align-items-center justify-content-center">
+          <radial-gauge
+            width="300"
+            height="300"
+            min-value="0"
+            max-value="3000"
+            major-ticks="0,500,1000,1500,2000,2500,3000"
+            [value]="(msla$ | async)"
+            units="m"
+            highlights='[
+              {"from": 1500, "to": 2500, "color": "rgba(50, 200, 50, .3)"},
+              {"from": 2500, "to": 3000, "color": "rgba(255, 0, 0, .3)"}
+            ]'
+          ></radial-gauge>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-xxl-3 col-md-6 col-sm-12">
+      <nb-card>
+        <nb-card-header>
+          Compass
+        </nb-card-header>
+        <nb-card-body class="d-flex align-items-center justify-content-center">
+          <radial-gauge
+            width="300"
+            height="300"
+            min-value="0"
+            max-value="360"
+            major-ticks="N,NE,E,ES,S,SW,W,WN,N"
+            minor-ticks="10"
+            ticks-angle="360"
+            start-angle="180"
+            stroke-ticks="false"
+            highlights="false"
+            color-plate="white"
+            color-major-ticks="#000"
+            color-minor-ticks="#000"
+            color-numbers="#000"
+            color-needle="#000"
+            color-needle-end="#000"
+            numbers-margin="2"
+            font-numbers-size="30"
+            color-needle-shadow-down="false"
+            color-needle-circle-outer="#000"
+            color-circle-inner="false"
+            value-box="false"
+            value-text-shadow="false"
+            needle-circle-size="7"
+            animation-rule="linear"
+            needle-type="line"
+            needle-start="75"
+            needle-end="99"
+            needle-width="3"
+            borders="true"
+            border-inner-width="3"
+            border-middle-width="1"
+            border-outer-width="5"
+                border-shadow-width="0"
+            animation-duration="1500"
+            animation-target="plate"
+            [value]="(compass$ | async)"
+          >
+          </radial-gauge>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-12">
       <nb-card>
         <nb-card-body>
@@ -107,38 +170,37 @@
         </nb-card-body>
       </nb-card>
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-3">
       <nb-card>
-        <nb-card-header>Live Sensors</nb-card-header>
+        <nb-card-header>Live Speed</nb-card-header>
         <nb-card-body>
-          <chart type="line" [data]="sensorsData" [options]="liveSensorsOptions"></chart>
+          <ngx-live-chart [liveChartData]="speedLiveChartData" ></ngx-live-chart>
         </nb-card-body>
       </nb-card>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-3">
       <nb-card>
-        <nb-card-header>Temperature</nb-card-header>
+        <nb-card-header>Live Msla</nb-card-header>
         <nb-card-body>
-          <div class="d-flex">
-            <linear-gauge width="50" height="150"></linear-gauge>
-            <chart type="line" [data]="sensorsData" [options]="liveSensorsOptions"></chart>
-          </div>
+          <ngx-live-chart [liveChartData]="speedLiveChartData" ></ngx-live-chart>
         </nb-card-body>
       </nb-card>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-3">
       <nb-card>
-        <nb-card-header>Live Sensors</nb-card-header>
+        <nb-card-header>Live Temperature</nb-card-header>
         <nb-card-body>
-          <chart type="line" [data]="sensorsData" [options]="liveSensorsOptions"></chart>
+          <ngx-live-chart [liveChartData]="speedLiveChartData" ></ngx-live-chart>
         </nb-card-body>
       </nb-card>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-3">
       <nb-card>
-        <nb-card-header>Live Sensors</nb-card-header>
+        <nb-card-header>Live Humidity</nb-card-header>
         <nb-card-body>
-          <chart type="line" [data]="sensorsData" [options]="liveSensorsOptions"></chart>
+          <ngx-live-chart [liveChartData]="speedLiveChartData" ></ngx-live-chart>
         </nb-card-body>
       </nb-card>
     </div>

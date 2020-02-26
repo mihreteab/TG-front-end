@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { UserService } from './users.service';
 import { SensorService } from './sensor.service';
+import { ChartService } from './chart.service';
 
 const SERVICES = [
   UserService,
   SensorService,
+  ChartService,
 ];
 
 @NgModule({
