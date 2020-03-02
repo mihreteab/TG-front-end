@@ -32,6 +32,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   acceleration$: Observable<number>;
   compass$: Observable<number>;
 
+  humidityChartData: any = [];
+  temperatureChartData: any = [];
+  ammoniaChartData: any = [];
+  co2ChartData: any = [];
+
   constructor(
     private sensorService: SensorService,
     private chartService: ChartService,
@@ -69,12 +74,45 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private getLiveChartData() {
 
-    this.chartService.getInitialLiveChartData('speed')
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((data: any) => {
-        this.speedLiveChartData = data.liveChart;
-        this.startReceivingLiveData('speed');
-      })
+    this.humidityChartData = [
+      { label: 'Sun', value: 80 },
+      { label: 'Mon', value: 87 },
+      { label: 'Tue', value: 83 },
+      { label: 'Wed', value: 93 },
+      { label: 'Thu', value: 88 },
+      { label: 'Fri', value: 81 },
+      { label: 'Sat', value: 89 },
+    ]
+
+    this.temperatureChartData = [
+      { label: 'Sun', value: 34 },
+      { label: 'Mon', value: 38 },
+      { label: 'Tue', value: 44 },
+      { label: 'Wed', value: 31 },
+      { label: 'Thu', value: 28 },
+      { label: 'Fri', value: 41 },
+      { label: 'Sat', value: 35 },
+    ]
+
+    this.ammoniaChartData = [
+      { label: 'Sun', value: 23 },
+      { label: 'Mon', value: 28 },
+      { label: 'Tue', value: 30 },
+      { label: 'Wed', value: 26 },
+      { label: 'Thu', value: 38 },
+      { label: 'Fri', value: 41 },
+      { label: 'Sat', value: 37 },
+    ]
+
+    this.co2ChartData = [
+      { label: 'Sun', value: 44 },
+      { label: 'Mon', value: 38 },
+      { label: 'Tue', value: 36 },
+      { label: 'Wed', value: 26 },
+      { label: 'Thu', value: 39 },
+      { label: 'Fri', value: 42 },
+      { label: 'Sat', value: 37 },
+    ]
   }
 
   startReceivingLiveData(type: string) {
@@ -96,7 +134,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-
       this.msla$ = interval(1000).pipe(
         map(() => Math.floor(Math.random() * 100) + 1500)
       );
@@ -112,7 +149,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.compass$ = interval(1000).pipe(
         map(() => Math.floor(Math.random() * 120) + 20)
       );
-
     });
   }
 

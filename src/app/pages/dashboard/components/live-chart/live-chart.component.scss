@@ -1,19 +1,7 @@
 @import '../../../../@theme/styles/themes';
 @import '~@nebular/theme/styles/global/typography/typography';
 
-ngx-live-chart {
-  flex: 1;
-  position: relative;
-
-  ::ng-deep {
-    canvas {
-      border-bottom-left-radius: nb-theme(card-border-radius);
-      border-bottom-right-radius: nb-theme(card-border-radius);
-    }
-    .echart {
-      position: absolute;
-      height: 100%;
-      width: 100%;
-    }
-  }
+.live-chart {
+  // height: 200px;
+  height: 100%;
 }

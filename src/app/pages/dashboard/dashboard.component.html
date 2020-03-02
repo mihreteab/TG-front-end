@@ -92,7 +92,7 @@
           Msla
         </nb-card-header>
         <nb-card-body class="d-flex align-items-center justify-content-center">
-          <radial-gauge
+          <!-- <radial-gauge
             width="300"
             height="300"
             min-value="0"
@@ -104,7 +104,8 @@
               {"from": 1500, "to": 2500, "color": "rgba(50, 200, 50, .3)"},
               {"from": 2500, "to": 3000, "color": "rgba(255, 0, 0, .3)"}
             ]'
-          ></radial-gauge>
+          ></radial-gauge> -->
+          <ngx-msla [value]="1550" ></ngx-msla>
         </nb-card-body>
       </nb-card>
     </div>
@@ -172,37 +173,46 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-3">
+    <div class="col-sm-12 col-lg-3">
       <nb-card>
-        <nb-card-header>Live Speed</nb-card-header>
+        <nb-card-header>Temperature</nb-card-header>
         <nb-card-body>
-          <ngx-live-chart [liveChartData]="speedLiveChartData" ></ngx-live-chart>
+          <div class="d-flex justify-content-center chart-container">
+            <linear-gauge width="150" height="300" value="30"></linear-gauge>
+            <!-- <ngx-live-chart class="flex-1" [data]="temperatureChartData" color="#0095ff" [limit]="humidityLimit" ></ngx-live-chart> -->
+          </div>
         </nb-card-body>
       </nb-card>
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-3">
+    <div class="col-sm-12 col-lg-3">
       <nb-card>
-        <nb-card-header>Live Msla</nb-card-header>
+        <nb-card-header>Humidity</nb-card-header>
         <nb-card-body>
-          <ngx-live-chart [liveChartData]="speedLiveChartData" ></ngx-live-chart>
+          <div class="chart-container">
+            <ngx-live-chart [data]="humidityChartData" color="#ff3d71" limit="90" ></ngx-live-chart>
+          </div>
         </nb-card-body>
       </nb-card>
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-3">
-      <nb-card>
-        <nb-card-header>Live Temperature</nb-card-header>
-        <nb-card-body>
-          <ngx-live-chart [liveChartData]="speedLiveChartData" ></ngx-live-chart>
-        </nb-card-body>
-      </nb-card>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-3">
-      <nb-card>
-        <nb-card-header>Live Humidity</nb-card-header>
-        <nb-card-body>
-          <ngx-live-chart [liveChartData]="speedLiveChartData" ></ngx-live-chart>
-        </nb-card-body>
-      </nb-card>
-    </div>
+    <div class="col-sm-12 col-lg-3">
+        <nb-card>
+          <nb-card-header>Ammonia</nb-card-header>
+          <nb-card-body>
+            <div class="chart-container">
+              <ngx-live-chart [data]="ammoniaChartData" color="#00d68f" limit="90"></ngx-live-chart>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-sm-12 col-lg-3">
+        <nb-card>
+          <nb-card-header>Co2</nb-card-header>
+          <nb-card-body>
+            <div class="chart-container">
+              <ngx-live-chart [data]="co2ChartData" color="#3366ff" limit="90" ></ngx-live-chart>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
   </div>
 </div>

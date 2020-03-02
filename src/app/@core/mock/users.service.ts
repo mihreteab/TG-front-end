@@ -13,6 +13,7 @@ export class UserService extends UserData {
       email: 'kate@gmail.com',
       picture: 'assets/images/kate.png',
       company: 'Kate\'s Company',
+      icd: 'Garmin Fleet 780',
       lastConnection: new Date('2020-02-23')
     },
   };

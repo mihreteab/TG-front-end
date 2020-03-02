@@ -7,6 +7,7 @@ import { NbCardModule, NbIconModule } from '@nebular/theme';
 import { MomentTimezoneModule } from 'angular-moment-timezone';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { LiveChartComponent } from './components/live-chart/live-chart.component';
+import { MslaComponent } from './components/msla/msla.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { LiveChartComponent } from './components/live-chart/live-chart.component
   declarations: [
     DashboardComponent,
     LiveChartComponent,
+    MslaComponent,
   ],
 })
 export class DashboardModule { }

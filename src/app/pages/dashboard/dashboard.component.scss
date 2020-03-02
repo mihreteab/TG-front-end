@@ -65,4 +65,15 @@
       text-transform: uppercase;
     }
   }
+  .chart-container {
+    height: 300px;
+    position: relative;
+  }
+  .live-chart {
+    height: 300px;
+  }
+  ngx-msla {
+   width: 100%; 
+   height: 100%;
+  }
 }

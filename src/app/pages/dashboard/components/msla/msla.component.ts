@@ -4,17 +4,14 @@ import { NbThemeService, NbColorHelper } from '@nebular/theme';
 import { LayoutService } from '../../../../@core/utils/layout.service';
 
 @Component({
-  selector: 'ngx-live-chart',
-  styleUrls: ['./live-chart.component.scss'],
-  templateUrl: './live-chart.component.html',
+  selector: 'ngx-msla',
+  styleUrls: ['./msla.component.scss'],
+  templateUrl: './msla.component.html',
 })
-export class LiveChartComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class MslaComponent implements AfterViewInit, OnDestroy, OnChanges {
   private alive = true;
 
-  @Input() data: { label: string, value }[];
-  @Input() color: string;
-  @Input() limit: number;
-  @Input() height: number;
+  @Input() value: number;
 
   options: any = {};
   chartData: any = {};
@@ -36,47 +33,42 @@ export class LiveChartComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   generateChartDataAndOption() {
     const chartjs = this.variables.chartjs;
-    const labels = this.data.map(item => item.label);
-    const data: number[] = this.data.map(item => item.value);
-
-    const suggestedMin = Math.floor(Math.min(...data) / 10) * 10 - 30;
-
     this.chartData = {
-      labels,
+      labels: ['','','','','','',''],
       datasets: [{
-        data,
-        label: '',
-        backgroundColor: NbColorHelper.hexToRgbA(this.color || this.variables.danger, 0.3),
-        borderColor: this.color || this.variables.danger,
+        data: [30, 50, 45, 68, 55, 60, 40],
+        backgroundColor: 'transparent',
+        borderColor: '#000',
       }],
     };
 
     this.options = {
       responsive: true,
       maintainAspectRatio: false,
+      animation: {
+        duration: 0, // general animation time
+      },
       scales: {
+        display: false,
         xAxes: [
           {
             gridLines: {
-              display: true,
-              color: chartjs.axisLineColor,
+              display: false,
+              drawBorder: false,
             },
             ticks: {
-              fontColor: chartjs.textColor,
+              display: false,
             },
           },
         ],
         yAxes: [
           {
             gridLines: {
-              display: true,              
-              color: [chartjs.axisLineColor, 'red', chartjs.axisLineColor, chartjs.axisLineColor, chartjs.axisLineColor, chartjs.axisLineColor, chartjs.axisLineColor, chartjs.axisLineColor],
+              display: false,
+              drawBorder: false,
             },
             ticks: {
-              fontColor: chartjs.textColor,
-              suggestedMin: suggestedMin >= 0 ? suggestedMin : 0,
-              // suggestedMax: 100,
-              stepSize: 10
+              display: false
             },
           },
         ],
@@ -84,6 +76,16 @@ export class LiveChartComponent implements AfterViewInit, OnDestroy, OnChanges {
       legend: {
         display: false
       },
+      elements: {
+        point:{
+            radius: 0
+        }
+      },
+      tooltips: {
+        filter: function (tooltipItem, data) {
+          return false;
+        }
+      }
     };
 
   }
