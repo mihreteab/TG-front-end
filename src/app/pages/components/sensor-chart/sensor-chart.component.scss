@@ -1,0 +1,76 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  ngx-sensor-chart {
+    display: block;
+    height: nb-theme(card-height-medium);
+    width: 100%;
+    background-color: red;
+
+    ::ng-deep chart {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  nb-card {
+    position: relative;
+  }
+
+  .flip-icon {
+    position: absolute;
+    right: 0.625rem;
+    top: 1rem;
+    @include nb-rtl(right, auto);
+    @include nb-rtl(left, 0.625rem);
+    cursor: pointer;
+  }
+
+  ::ng-deep .flipped {
+    .back-container {
+      .flip-icon {
+        transform: scaleX(-1);
+      }
+      .flip-button {
+        display: none !important;
+      }
+    }
+
+    .front-container {
+      .flip-icon {
+        display: none;
+      }
+      
+    }
+  }
+
+  ::ng-deep .front-container {
+    .flip-button {
+      display: none !important;
+    }
+  }
+
+  .battery-chart-container {
+    position: relative;
+    .battery-label {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .echart {
+      height: 300px;
+    }
+  }
+}

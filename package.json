@@ -54,6 +54,7 @@
     "intl": "1.2.5",
     "ionicons": "2.0.1",
     "leaflet": "1.2.0",
+    "lodash": "^4.17.15",
     "mapbox-gl": "^1.8.0",
     "nebular-icons": "1.1.0",
     "ng-canvas-gauges": "^6.0.4",

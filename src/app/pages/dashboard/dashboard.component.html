@@ -53,7 +53,7 @@
             min-value="0"
             max-value="240"
             major-ticks="0,40,80,120,160,200,240"
-            [value]="(speed$ | async)"
+            [value]="(sensor$ | async)?.speed"
             units="Km/h"
             highlights='[
               {"from": 120, "to": 200, "color": "rgba(50, 200, 50, .3)"},
@@ -75,7 +75,7 @@
             min-value="-5"
             max-value="15"
             major-ticks="-5,0,5,10,15"
-            [value]="(acceleration$ | async)"
+            [value]="(sensor$ | async)?.acceleration"
             units="m/s²"
             highlights='[
               {"from": -5, "to": 0, "color": "rgba(255, 0, 0, .3)"},
@@ -92,20 +92,7 @@
           Msla
         </nb-card-header>
         <nb-card-body class="d-flex align-items-center justify-content-center">
-          <!-- <radial-gauge
-            width="300"
-            height="300"
-            min-value="0"
-            max-value="3000"
-            major-ticks="0,500,1000,1500,2000,2500,3000"
-            [value]="(msla$ | async)"
-            units="m"
-            highlights='[
-              {"from": 1500, "to": 2500, "color": "rgba(50, 200, 50, .3)"},
-              {"from": 2500, "to": 3000, "color": "rgba(255, 0, 0, .3)"}
-            ]'
-          ></radial-gauge> -->
-          <ngx-msla [value]="1550" ></ngx-msla>
+          <ngx-msla [value]="(sensor$ | async)?.msla" ></ngx-msla>
         </nb-card-body>
       </nb-card>
     </div>
@@ -149,10 +136,10 @@
             border-inner-width="3"
             border-middle-width="1"
             border-outer-width="5"
-                border-shadow-width="0"
+            border-shadow-width="0"
             animation-duration="1500"
             animation-target="plate"
-            [value]="(compass$ | async)"
+            [value]="(sensor$ | async)?.heading"
           >
           </radial-gauge>
         </nb-card-body>
@@ -173,46 +160,17 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-lg-3">
-      <nb-card>
-        <nb-card-header>Temperature</nb-card-header>
-        <nb-card-body>
-          <div class="d-flex justify-content-center chart-container">
-            <linear-gauge width="150" height="300" value="30"></linear-gauge>
-            <!-- <ngx-live-chart class="flex-1" [data]="temperatureChartData" color="#0095ff" [limit]="humidityLimit" ></ngx-live-chart> -->
-          </div>
-        </nb-card-body>
-      </nb-card>
+    <div class="col-xxl-3 col-md-6 col-sm-12">
+      <ngx-sensor-chart title="Temperature" type="temperature" [data]="temperatureChartData"></ngx-sensor-chart>
     </div>
-    <div class="col-sm-12 col-lg-3">
-      <nb-card>
-        <nb-card-header>Humidity</nb-card-header>
-        <nb-card-body>
-          <div class="chart-container">
-            <ngx-live-chart [data]="humidityChartData" color="#ff3d71" limit="90" ></ngx-live-chart>
-          </div>
-        </nb-card-body>
-      </nb-card>
+    <div class="col-xxl-3 col-md-6 col-sm-12">
+      <ngx-sensor-chart title="Humidity" type="humidity" [data]="humidityChartData"></ngx-sensor-chart>
     </div>
-    <div class="col-sm-12 col-lg-3">
-        <nb-card>
-          <nb-card-header>Ammonia</nb-card-header>
-          <nb-card-body>
-            <div class="chart-container">
-              <ngx-live-chart [data]="ammoniaChartData" color="#00d68f" limit="90"></ngx-live-chart>
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
-      <div class="col-sm-12 col-lg-3">
-        <nb-card>
-          <nb-card-header>Co2</nb-card-header>
-          <nb-card-body>
-            <div class="chart-container">
-              <ngx-live-chart [data]="co2ChartData" color="#3366ff" limit="90" ></ngx-live-chart>
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
+    <div class="col-xxl-3 col-md-6 col-sm-12">
+      <ngx-sensor-chart title="Ammonia" type="ammonia" [data]="ammoniaChartData" max="50"></ngx-sensor-chart>
+    </div>
+    <div class="col-xxl-3 col-md-6 col-sm-12">
+      <ngx-sensor-chart title="Co2" type="co2" [data]="co2ChartData" max="50"></ngx-sensor-chart>
+    </div>
   </div>
 </div>

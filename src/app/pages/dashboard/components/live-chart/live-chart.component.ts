@@ -19,7 +19,7 @@ export class LiveChartComponent implements AfterViewInit, OnDestroy, OnChanges {
   options: any = {};
   chartData: any = {};
   themeSubscription: any;
-  variables: any;
+  colors: any;
 
   constructor(private theme: NbThemeService,
               private layoutService: LayoutService) {
@@ -29,13 +29,13 @@ export class LiveChartComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   ngAfterViewInit() {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-      this.variables = config.variables;
+      this.colors = config.variables;
       this.generateChartDataAndOption();
     })
   }
 
   generateChartDataAndOption() {
-    const chartjs = this.variables.chartjs;
+    const chartjs = this.colors.chartjs;
     const labels = this.data.map(item => item.label);
     const data: number[] = this.data.map(item => item.value);
 
@@ -46,8 +46,8 @@ export class LiveChartComponent implements AfterViewInit, OnDestroy, OnChanges {
       datasets: [{
         data,
         label: '',
-        backgroundColor: NbColorHelper.hexToRgbA(this.color || this.variables.danger, 0.3),
-        borderColor: this.color || this.variables.danger,
+        backgroundColor: NbColorHelper.hexToRgbA(this.color || this.colors.danger, 0.3),
+        borderColor: this.color || this.colors.danger,
       }],
     };
 
@@ -70,7 +70,7 @@ export class LiveChartComponent implements AfterViewInit, OnDestroy, OnChanges {
           {
             gridLines: {
               display: true,              
-              color: [chartjs.axisLineColor, 'red', chartjs.axisLineColor, chartjs.axisLineColor, chartjs.axisLineColor, chartjs.axisLineColor, chartjs.axisLineColor, chartjs.axisLineColor],
+              color: [chartjs.axisLineColor, 'red']
             },
             ticks: {
               fontColor: chartjs.textColor,

@@ -1,0 +1,35 @@
+<nb-flip-card [flipped]="flipped">
+  <nb-card-front>
+    <nb-card>
+      <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
+      <nb-card-header *ngIf="title">
+        {{ title }}
+      </nb-card-header>
+      <nb-card-body>
+        <div *ngIf="type === 'temperature'" class="d-flex justify-content-center chart-container">
+          <linear-gauge width="150" height="300" value="30"></linear-gauge>
+        </div>
+        <chart *ngIf="type !== 'temperature'" type="line" style="height: 300px;" [data]="data" [options]="options"></chart>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-front>
+  <nb-card-back>
+    <nb-card>
+      <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
+      <nb-card-header *ngIf="title">
+        {{ type === 'temperature' ? 'Temperature' : 'Battery' }}
+      </nb-card-header>
+      <nb-card-body>
+        <chart *ngIf="type === 'temperature'" type="line" style="height: 300px;" [data]="data" [options]="options"></chart>
+        <div *ngIf="type !== 'temperature'" class="battery-chart-container">
+          <div class="m-0 battery-label">{{ batteryPercent }} %</div>
+            <div *ngIf="type !== 'temperature'" echarts
+            class="echart"
+            [options]="batteryOptions">
+           </div>
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+  </nb-card-back>
+</nb-flip-card>

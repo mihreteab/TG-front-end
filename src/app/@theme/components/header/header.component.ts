@@ -17,6 +17,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly: boolean = false;
   user: any;
 
+  devices = [
+    {
+      value: 'Garmin Fleet 780',
+      label: 'Garmin Fleet 780'
+    },
+    {
+      value: 'Samsung',
+      label: 'Samsung'
+    },
+    {
+      value: 'TomTom Bridge',
+      label: 'TomTom Bridge'
+    }
+  ]
+
+  currentDevice = 'Garmin Fleet 780';
+
   themes = [
     {
       value: 'default',
@@ -74,6 +91,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  changeDevice(deviceName: string) {
+
   }
 
   changeTheme(themeName: string) {

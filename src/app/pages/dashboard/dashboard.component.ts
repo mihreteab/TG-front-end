@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, AfterViewInit, ɵConsole} from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { takeUntil, map, takeWhile, switchMap } from 'rxjs/operators';
 import { Subject, Observable, interval } from 'rxjs';
@@ -6,8 +6,11 @@ import { SensorService } from '../../@core/mock/sensor.service';
 import { ChartService } from '../../@core/mock/chart.service';
 
 import * as mapboxgl from 'mapbox-gl';
+import * as _ from 'lodash';
+import * as moment from 'moment-timezone';
 import { NbThemeService, NbColorHelper } from '@nebular/theme';
 import { LiveChart } from '../../@core/data/chart';
+import { SensorType, ReadingType } from '../../@core/data/sensor';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -17,139 +20,97 @@ import { LiveChart } from '../../@core/data/chart';
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
-  private alive = true;
-
-  private intervalSubscription: any;
   sensor$: any;
   map: mapboxgl.Map;
+  colors: any[];
 
   themeSubscription: any;
-
-  speedLiveChartData: any;
-
-  msla$: Observable<number>;
-  speed$: Observable<number>;
-  acceleration$: Observable<number>;
-  compass$: Observable<number>;
-
-  humidityChartData: any = [];
-  temperatureChartData: any = [];
-  ammoniaChartData: any = [];
-  co2ChartData: any = [];
+  ammoniaChartData: any = {};
+  temperatureChartData: any = {};
+  humidityChartData: any = {};
+  co2ChartData: any = {};
 
   constructor(
     private sensorService: SensorService,
-    private chartService: ChartService,
     private theme: NbThemeService,
   ) {
 
   }
 
   ngOnInit() {
-    this.sensor$ = this.sensorService.getSensor()
-
     mapboxgl.accessToken = environment.mapbox.accessToken;
-    this.map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v11',
-      zoom: 13,
-      center: [-122.41, 37.75]
-    });
-
-    var popup = new mapboxgl.Popup({ offset: 25 }).setText(
-      'It\'s the test for popup'
-      );
-
-    new mapboxgl.Marker()
-      .setLngLat({
-        lat: 37.75,
-        lng: -122.41
-      })
-      .setPopup(popup)
-      .addTo(this.map);
-
-    
-    this.getLiveChartData();
   }
-
-  private getLiveChartData() {
-
-    this.humidityChartData = [
-      { label: 'Sun', value: 80 },
-      { label: 'Mon', value: 87 },
-      { label: 'Tue', value: 83 },
-      { label: 'Wed', value: 93 },
-      { label: 'Thu', value: 88 },
-      { label: 'Fri', value: 81 },
-      { label: 'Sat', value: 89 },
-    ]
-
-    this.temperatureChartData = [
-      { label: 'Sun', value: 34 },
-      { label: 'Mon', value: 38 },
-      { label: 'Tue', value: 44 },
-      { label: 'Wed', value: 31 },
-      { label: 'Thu', value: 28 },
-      { label: 'Fri', value: 41 },
-      { label: 'Sat', value: 35 },
-    ]
-
-    this.ammoniaChartData = [
-      { label: 'Sun', value: 23 },
-      { label: 'Mon', value: 28 },
-      { label: 'Tue', value: 30 },
-      { label: 'Wed', value: 26 },
-      { label: 'Thu', value: 38 },
-      { label: 'Fri', value: 41 },
-      { label: 'Sat', value: 37 },
-    ]
-
-    this.co2ChartData = [
-      { label: 'Sun', value: 44 },
-      { label: 'Mon', value: 38 },
-      { label: 'Tue', value: 36 },
-      { label: 'Wed', value: 26 },
-      { label: 'Thu', value: 39 },
-      { label: 'Fri', value: 42 },
-      { label: 'Sat', value: 37 },
-    ]
-  }
-
-  startReceivingLiveData(type: string) {
-    if (this.intervalSubscription) {
-      this.intervalSubscription.unsubscribe();
-    }
-
-    this.intervalSubscription = interval(200)
-      .pipe(
-        takeWhile(() => this.alive),
-        switchMap(() => this.chartService.getLiveChartData(type)),
-      )
-      .subscribe((liveChartData: any[]) => {
-        this.speedLiveChartData = [...liveChartData];
-      });
-  }
-
-
 
   ngAfterViewInit() {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-      this.msla$ = interval(1000).pipe(
-        map(() => Math.floor(Math.random() * 100) + 1500)
-      );
-  
-      this.speed$ = interval(1000).pipe(
-        map(() => Math.floor(Math.random() * 20) + 80)
-      );
-  
-      this.acceleration$ = interval(1000).pipe(
-        map(() => Math.random() + 0.2)
-      );
-  
-      this.compass$ = interval(1000).pipe(
-        map(() => Math.floor(Math.random() * 120) + 20)
-      );
+      this.colors = [config.variables.primary, config.variables.danger, config.variables.info, config.variables.sucess];
+      this.sensor$ = this.sensorService.getSensor()
+      this.sensor$.subscribe((data: SensorType) => {
+        this.temperatureChartData = this.generateChartData(data, 'temperature');
+        this.ammoniaChartData = this.generateChartData(data, 'ammonia');
+        this.humidityChartData = this.generateChartData(data, 'humidity');
+        this.co2ChartData = this.generateChartData(data, 'co2');
+
+        this.map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v11',
+          zoom: 13,
+          center: [data.gpsPosition.lng, data.gpsPosition.lat]
+        });
+    
+        var popup = new mapboxgl.Popup({ offset: 25 }).setText(
+          'It\'s the test for popup'
+          );
+    
+        new mapboxgl.Marker()
+          .setLngLat({
+            lat: data.gpsPosition.lat,
+            lng: data.gpsPosition.lng
+          })
+          .setPopup(popup)
+          .addTo(this.map);
+      });
     });
+  }
+
+  generateChartData (sensorData: SensorType, type: string) {
+    const reading = sensorData.reading;
+    const sensorDataGroupedByTime = _.groupBy(reading, 'timestamp');
+    const sensorNames = Object.keys(_.groupBy(reading, 'sensor'));
+    const labels = Object.keys(sensorDataGroupedByTime);
+
+    const datasets = sensorNames.map((sensorName: string, index) => {
+      const color = this.colors[index%4];
+      const dataset = {
+        label: sensorName,
+        data: [],
+        backgroundColor: NbColorHelper.hexToRgbA(color, 0.3),
+        borderColor: color,
+      }
+      const data = [];
+      Object.values(sensorDataGroupedByTime).map((sensorDataItem: ReadingType[]) => {
+        let value = 0
+        const index = sensorDataItem.findIndex(item => item.sensor === sensorName);
+        if (index !== -1) {
+          value = sensorDataItem[index][type] || 0
+        }
+        data.push(value);
+      });
+      dataset.data = data;
+      return dataset
+    });
+    
+    return {
+      labels: labels.map(label => moment(label).format('hh:mm')),
+      datasets
+    }
+  }
+
+  get dynamicColors () {
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
+    return "rgb(" + r + "," + g + "," + b + ")";
   }
 
   ngOnDestroy() {

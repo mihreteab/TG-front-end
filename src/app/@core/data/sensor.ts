@@ -17,12 +17,17 @@ export interface PositionType {
 }
 
 export interface ReadingType {
-  timestamp: Date;
+  timestamp: Date | string;
   serial: string;
+  sensor: string;
   temperature: number;
   humidity: number;
+  ammonia: number;
+  co2: number;
 }
 
 export abstract class SensorData {
   abstract getSensor(): Observable<SensorType>;
+  abstract getFlipped(): Observable<string>;
+  abstract setFlipped(type: string): Observable<string>;
 }
