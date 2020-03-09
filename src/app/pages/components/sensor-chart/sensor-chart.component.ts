@@ -20,7 +20,6 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
   chartData: any = {};
   variables: any;
   themeSubscription: any;
-  flipped$: any;
   flipped: boolean = false;
   batteryOptions: any = {}
   batteryPercent: number = 40;
@@ -29,11 +28,7 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
 
   }
 
-  ngOnInit() {
-    this.sensorService.changes.subscribe(type => {
-      this.flipped = type === this.type;
-    })
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
@@ -194,7 +189,7 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
   }
 
   toggleView () {
-    this.sensorService.setFlipped(this.type)
+    this.flipped = !this.flipped;
   }
 
   ngOnDestroy(): void {
