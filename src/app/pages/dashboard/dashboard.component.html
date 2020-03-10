@@ -51,13 +51,12 @@
             width="300"
             height="300"
             min-value="0"
-            max-value="240"
-            major-ticks="0,40,80,120,160,200,240"
+            max-value="120"
+            major-ticks="0,20,40,60,80,10,120"
             [value]="(sensor$ | async)?.speed"
             units="Km/h"
             highlights='[
-              {"from": 120, "to": 200, "color": "rgba(50, 200, 50, .3)"},
-              {"from": 200, "to": 240, "color": "rgba(255, 0, 0, .3)"}
+              {"from": 100, "to": 120, "color": "rgba(255, 0, 0, .3)"}
             ]'
           ></radial-gauge>
         </nb-card-body>
@@ -72,15 +71,14 @@
           <radial-gauge
             width="300"
             height="300"
-            min-value="-5"
-            max-value="15"
-            major-ticks="-5,0,5,10,15"
+            min-value="-1"
+            max-value="1"
+            major-ticks="-1,0,1"
             [value]="(sensor$ | async)?.acceleration"
             units="m/s²"
             highlights='[
-              {"from": -5, "to": 0, "color": "rgba(255, 0, 0, .3)"},
-              {"from": 0, "to": 10, "color": "rgba(50, 200, 50, .3)"},
-              {"from": 10, "to": 15, "color": "rgba(255, 0, 0, .3)"}
+              {"from": -1, "to": 0, "color": "rgba(255, 0, 0, .3)"},
+              {"from": 0, "to": 1, "color": "rgba(50, 200, 50, .3)"}
             ]'
           ></radial-gauge>
         </nb-card-body>
@@ -161,16 +159,32 @@
   </div>
   <div class="row">
     <div class="col-xxl-3 col-md-6 col-sm-12">
-      <ngx-sensor-chart title="Temperature" type="temperature" [data]="temperatureChartData"></ngx-sensor-chart>
+      <ngx-sensor-chart
+        title="Temperature & Humidity"
+        type="temperature"
+        battery="45"
+      ></ngx-sensor-chart>
     </div>
     <div class="col-xxl-3 col-md-6 col-sm-12">
-      <ngx-sensor-chart title="Humidity" type="humidity" [data]="humidityChartData"></ngx-sensor-chart>
+      <ngx-sensor-chart
+        title="Ammonia"
+        type="ammonia"
+        [data]="ammoniaChartData"
+        max="50"
+        battery="57"
+        unit="PPM"
+      ></ngx-sensor-chart>
     </div>
     <div class="col-xxl-3 col-md-6 col-sm-12">
-      <ngx-sensor-chart title="Ammonia" type="ammonia" [data]="ammoniaChartData" max="50"></ngx-sensor-chart>
-    </div>
-    <div class="col-xxl-3 col-md-6 col-sm-12">
-      <ngx-sensor-chart title="Co2" type="co2" [data]="co2ChartData" max="50"></ngx-sensor-chart>
+      <ngx-sensor-chart
+        title="Co2"
+        type="co2"
+        [data]="co2ChartData"
+        max="2000"
+        min="150"
+        battery="60"
+        unit="PPM"
+      ></ngx-sensor-chart>
     </div>
   </div>
 </div>

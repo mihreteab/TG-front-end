@@ -24,6 +24,7 @@ export interface ReadingType {
   humidity: number;
   ammonia: number;
   co2: number;
+  vibration: number;
 }
 
 export abstract class SensorData {

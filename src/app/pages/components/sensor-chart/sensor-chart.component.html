@@ -6,8 +6,29 @@
         {{ title }}
       </nb-card-header>
       <nb-card-body>
-        <div *ngIf="type === 'temperature'" class="d-flex justify-content-center chart-container">
-          <linear-gauge width="150" height="300" value="30"></linear-gauge>
+        <div *ngIf="type === 'temperature'" class="d-flex justify-content-around chart-container">
+          <linear-gauge
+            width="150"
+            height="300"
+            min-value="-20"
+            max-value="10"
+            value="5"
+            major-ticks="-20,-15,-10,-5,0,5,10"
+            highlights='[
+              {"from": -20, "to": -10, "color": "rgba(255, 0, 0, .3)"}
+            ]'
+          ></linear-gauge>
+          <linear-gauge
+            width="150"
+            height="300"
+            min-value="20"
+            max-value="80"
+            value="50"
+            major-ticks="20,30,40,50,60,70,80"
+            highlights='[
+              {"from": 70, "to": 80, "color": "rgba(255, 0, 0, .3)"}
+            ]'
+          ></linear-gauge>
         </div>
         <chart *ngIf="type !== 'temperature'" type="line" style="height: 300px;" [data]="data" [options]="options"></chart>
       </nb-card-body>
@@ -16,19 +37,18 @@
   <nb-card-back>
     <nb-card>
       <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
-      <nb-card-header *ngIf="title">
-        {{ type === 'temperature' ? 'Temperature' : 'Battery' }}
+      <nb-card-header>
+        Battery
       </nb-card-header>
       <nb-card-body>
-        <chart *ngIf="type === 'temperature'" type="line" style="height: 300px;" [data]="data" [options]="options"></chart>
-        <div *ngIf="type !== 'temperature'" class="battery-chart-container">
-          <div class="m-0 battery-label">{{ batteryPercent }} %</div>
-            <div *ngIf="type !== 'temperature'" echarts
-            class="echart"
-            [options]="batteryOptions">
+        <div class="battery-chart-container">
+          <div class="m-0 battery-label">{{ battery }} %</div>
+            <div
+              echarts
+              class="echart"
+              [options]="batteryOptions">
            </div>
         </div>
-
       </nb-card-body>
     </nb-card>
   </nb-card-back>

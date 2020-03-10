@@ -13,8 +13,11 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
   @Input() responsive: boolean = true;
   @Input() maintainAspectRatio: boolean = false;
   @Input() aspectRatio: number = 2;
+  @Input() min: number | string = 0;
   @Input() max: number | string = 100;
   @Input() type: string = '';
+  @Input() battery: number = 0;
+  @Input() unit: string = '';
 
   options: any = {};
   chartData: any = {};
@@ -22,7 +25,6 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
   themeSubscription: any;
   flipped: boolean = false;
   batteryOptions: any = {}
-  batteryPercent: number = 40;
 
   constructor(private theme: NbThemeService, private sensorService: SensorService) {
 
@@ -89,8 +91,8 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
         yAxes: [
           {
             scaleLabel: {
-              display: true,
-              labelString: 'Percentage',
+              display: !!this.unit,
+              labelString: this.unit,
               padding: 0
             },
             gridLines: {
@@ -98,8 +100,8 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
               color: [chartjs.axisLineColor, 'red']
             },
             ticks: {
-              stepSize: 10,
-              max: typeof this.max === 'number' ? this.max : parseInt(this.max),
+              stepSize: 100,
+              // max: typeof this.max === 'number' ? this.max : parseInt(this.max),
               fontColor: chartjs.textColor,
             },
           },
@@ -128,7 +130,7 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
           radius: visitorsPie.firstPieRadius,
           data: [
             {
-              value: this.batteryPercent,
+              value: this.battery,
               name: ' ',
               label: {
                 normal: {
@@ -166,7 +168,7 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
               hoverAnimation: false,
             },
             {
-              value: 100 - this.batteryPercent,
+              value: 100 - this.battery,
               name: ' ',
               tooltip: {
                 show: false,
