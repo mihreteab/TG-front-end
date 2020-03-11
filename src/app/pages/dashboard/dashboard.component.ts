@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   temperatureChartData: any = {};
   humidityChartData: any = {};
   co2ChartData: any = {};
+  vibrationChartData: any = {};
 
   constructor(
     private sensorService: SensorService,
@@ -50,12 +51,57 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.ammoniaChartData = this.generateChartData(data, 'ammonia');
         this.humidityChartData = this.generateChartData(data, 'humidity');
         this.co2ChartData = this.generateChartData(data, 'co2');
+        this.vibrationChartData = this.generateChartData(data, 'vibration');
 
-        this.map = new mapboxgl.Map({
+        const map = new mapboxgl.Map({
           container: 'map',
           style: 'mapbox://styles/mapbox/streets-v11',
           zoom: 13,
           center: [data.gpsPosition.lng, data.gpsPosition.lat]
+        });
+
+        map.on('load', function() {
+          console.log('test', map);
+          map.addSource('route', {
+          'type': 'geojson',
+          'data': {
+          'type': 'Feature',
+          'properties': {},
+          'geometry': {
+          'type': 'LineString',
+          'coordinates': [
+                  [-122.463990, 37.698862],
+                  [-122.465850, 37.689774],
+                  [-122.461784, 37.689788],
+                  [-122.461784, 37.689788],
+                  [-122.456787, 37.691920],
+                  [-122.456364, 37.692499],
+                  [-122.456385, 37.693453],
+                  [-122.456012, 37.693867],
+                  [-122.453069, 37.695129],
+                  [-122.450333, 37.698423],
+                  [-122.449845, 37.700808],
+                  [-122.448954, 37.701445],
+                  [-122.448106, 37.701564],
+                  [-122.440213, 37.698744],
+                  [-122.437145, 37.696778],
+                  [-122.434132, 37.695741],
+                ]
+              }
+            }
+          });
+          map.addLayer({
+            'id': 'route',
+            'type': 'line',
+            'source': 'route',
+            'layout': {
+            'line-join': 'round',
+            'line-cap': 'round'
+          },
+          'paint': {
+            'line-color': 'red',
+            'line-width': 4
+          }});
         });
     
         var popup = new mapboxgl.Popup({ offset: 25 }).setText(
@@ -64,11 +110,19 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     
         new mapboxgl.Marker()
           .setLngLat({
-            lat: data.gpsPosition.lat,
-            lng: data.gpsPosition.lng
+            lat: 37.698862,
+            lng: -122.463990
           })
           .setPopup(popup)
-          .addTo(this.map);
+          .addTo(map);
+
+        new mapboxgl.Marker()
+          .setLngLat({
+            lat: 37.695741,
+            lng: -122.434132
+          })
+          .setPopup(popup)
+          .addTo(map);
       });
     });
   }

@@ -18,6 +18,7 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
   @Input() type: string = '';
   @Input() battery: number = 0;
   @Input() unit: string = '';
+  @Input() stepSize: number = 100;
 
   options: any = {};
   chartData: any = {};
@@ -100,8 +101,8 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
               color: [chartjs.axisLineColor, 'red']
             },
             ticks: {
-              stepSize: 100,
-              // max: typeof this.max === 'number' ? this.max : parseInt(this.max),
+              stepSize: this.stepSize,
+              max: typeof this.max === 'number' ? this.max : parseInt(this.max),
               fontColor: chartjs.textColor,
             },
           },

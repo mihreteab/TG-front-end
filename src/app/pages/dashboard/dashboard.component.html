@@ -71,14 +71,14 @@
           <radial-gauge
             width="300"
             height="300"
-            min-value="-1"
-            max-value="1"
-            major-ticks="-1,0,1"
+            min-value="-5"
+            max-value="5"
+            major-ticks="-5,-4,-3,-2,-1,0,1,2,3,4,5"
             [value]="(sensor$ | async)?.acceleration"
             units="m/s²"
             highlights='[
-              {"from": -1, "to": 0, "color": "rgba(255, 0, 0, .3)"},
-              {"from": 0, "to": 1, "color": "rgba(50, 200, 50, .3)"}
+              {"from": -5, "to": -3, "color": "rgba(255, 0, 0, .3)"},
+              {"from": 3, "to": 5, "color": "rgba(255, 0, 0, .3)"},
             ]'
           ></radial-gauge>
         </nb-card-body>
@@ -170,7 +170,8 @@
         title="Ammonia"
         type="ammonia"
         [data]="ammoniaChartData"
-        max="50"
+        max="5000"
+        stepSize="100"
         battery="57"
         unit="PPM"
       ></ngx-sensor-chart>
@@ -184,6 +185,18 @@
         min="150"
         battery="60"
         unit="PPM"
+      ></ngx-sensor-chart>
+    </div>
+    <div class="col-xxl-3 col-md-6 col-sm-12">
+      <ngx-sensor-chart
+        title="Vibration"
+        type="vibration"
+        [data]="vibrationChartData"
+        max="1"
+        min="0"
+        stepSize="0.1"
+        battery="88"
+        unit="KHZ"
       ></ngx-sensor-chart>
     </div>
   </div>
