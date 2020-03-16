@@ -24,6 +24,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   map: mapboxgl.Map;
   colors: any[];
 
+  data$: Observable<any>;
+
+  speed: number = 0;
+  acceleration: number = 0;
+  msla: number = 0;
+  heading: number = 0;
+
   themeSubscription: any;
   ammoniaChartData: any = {};
   temperatureChartData: any = {};
@@ -31,9 +38,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   co2ChartData: any = {};
   vibrationChartData: any = {};
 
+  currentTime: any = moment().format('hh:mm');
+  currentTimeZone: any = new Date().getTimezoneOffset() / - 60
+
   constructor(
     private sensorService: SensorService,
     private theme: NbThemeService,
+    private chartService: ChartService,
   ) {
 
   }
@@ -47,11 +58,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.colors = [config.variables.primary, config.variables.danger, config.variables.info, config.variables.sucess];
       this.sensor$ = this.sensorService.getSensor()
       this.sensor$.subscribe((data: SensorType) => {
-        this.temperatureChartData = this.generateChartData(data, 'temperature');
-        this.ammoniaChartData = this.generateChartData(data, 'ammonia');
-        this.humidityChartData = this.generateChartData(data, 'humidity');
-        this.co2ChartData = this.generateChartData(data, 'co2');
-        this.vibrationChartData = this.generateChartData(data, 'vibration');
+        // this.temperatureChartData = this.generateChartData(data, 'temperature');
+        // // this.ammoniaChartData = this.generateChartData(data, 'ammonia');
+        // this.humidityChartData = this.generateChartData(data, 'humidity');
+        // this.co2ChartData = this.generateChartData(data, 'co2');
+        // this.vibrationChartData = this.generateChartData(data, 'vibration');
 
         const map = new mapboxgl.Map({
           container: 'map',
@@ -124,6 +135,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           .setPopup(popup)
           .addTo(map);
       });
+
+      this.data$ = this.chartService.getInitialLiveChartData()
+      setInterval(() => {
+        this.data$ = this.chartService.getLiveChartData();
+        this.currentTime = moment().format('hh:mm')
+      }, 10000)
     });
   }
 

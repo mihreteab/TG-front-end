@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnDestroy, OnChanges, ViewChild } from '@angular/core';
 import { NbThemeService, NbColorHelper } from '@nebular/theme';
 import { SensorService } from '../../../@core/mock/sensor.service';
 
@@ -9,7 +9,8 @@ import { SensorService } from '../../../@core/mock/sensor.service';
 })
 export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
   @Input() title: string;
-  @Input() data: any;
+  @Input() data: any[] = [];
+  @Input() labels: string[] = [];
   @Input() responsive: boolean = true;
   @Input() maintainAspectRatio: boolean = false;
   @Input() aspectRatio: number = 2;
@@ -19,18 +20,21 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
   @Input() battery: number = 0;
   @Input() unit: string = '';
   @Input() stepSize: number = 100;
+  @Input() temperature: number = 0;
+  @Input() humidity: number = 0;
 
   options: any = {};
   chartData: any = {};
   variables: any;
   themeSubscription: any;
   flipped: boolean = false;
-  batteryOptions: any = {}
-
+  batteryOptions: any = {};
+  colors: any[] = [];
+  
+  
   constructor(private theme: NbThemeService, private sensorService: SensorService) {
 
   }
-
   ngOnInit() {}
 
   ngAfterViewInit() {
@@ -41,37 +45,32 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
   }
 
   ngOnChanges() {
-    
+    this.generateBatteryOptions()
   }
 
   generateChart() {
     const chartjs = this.variables.chartjs;
-    const colors = this.variables;
-    this.chartData = {
-      labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      datasets: [{
-        data: [65, 59, 80, 81, 56, 55, 40],
-        label: 'Sensor 1',
-        backgroundColor: NbColorHelper.hexToRgbA(colors.primary, 0.3),
-        borderColor: colors.primary,
-      }, {
-        data: [28, 48, 40, 19, 86, 27, 90],
-        label: 'Sensor 2',
-        backgroundColor: NbColorHelper.hexToRgbA(colors.danger, 0.3),
-        borderColor: colors.danger,
-      }, {
-        data: [18, 48, 77, 9, 100, 27, 40],
-        label: 'Sensor 3',
-        backgroundColor: NbColorHelper.hexToRgbA(colors.info, 0.3),
-        borderColor: colors.info,
+    this.colors = [
+      {
+        backgroundColor: NbColorHelper.hexToRgbA(this.variables.primary, 0.3),
+        borderColor: this.variables.primary,
       },
-      ],
-    };
-
+      {
+        backgroundColor: NbColorHelper.hexToRgbA(this.variables.danger, 0.3),
+        borderColor: this.variables.danger,
+      },
+      {
+        backgroundColor: NbColorHelper.hexToRgbA(this.variables.info, 0.3),
+        borderColor: this.variables.info,
+      }
+    ]
     this.options = {
       responsive: this.responsive,
       maintainAspectRatio: this.maintainAspectRatio,
       aspectRatio: this.aspectRatio,
+      animation: {
+        duration: 0
+      },
       scales: {
         xAxes: [
           {
@@ -101,7 +100,7 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
               color: [chartjs.axisLineColor, 'red']
             },
             ticks: {
-              stepSize: this.stepSize,
+              // stepSize: this.stepSize,
               max: typeof this.max === 'number' ? this.max : parseInt(this.max),
               fontColor: chartjs.textColor,
             },
@@ -114,6 +113,10 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
         },
       },
     };
+    this.generateBatteryOptions()
+  }
+
+  generateBatteryOptions () {
     const visitorsPie: any = this.variables.visitorsPie;
 
     this.batteryOptions = {

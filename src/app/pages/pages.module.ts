@@ -7,6 +7,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     NbMenuModule,
     DashboardModule,
     MiscellaneousModule,
-    NgxEchartsModule
+    NgxEchartsModule,
+    ChartsModule
   ],
   declarations: [
     PagesComponent,

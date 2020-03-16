@@ -16,8 +16,8 @@
           <nb-icon class="icon" icon="clock-outline"></nb-icon>
         </div>
         <div class="details">
-          <div class="title h5">15:33</div>
-          <div class="title h5">UTC + 1</div>
+          <div class="title h5">{{ currentTime }}</div>
+          <div class="title h5">UTC {{ currentTimeZone }}</div>
         </div>
       </nb-card>
     </div>
@@ -53,7 +53,7 @@
             min-value="0"
             max-value="120"
             major-ticks="0,20,40,60,80,10,120"
-            [value]="(sensor$ | async)?.speed"
+            [value]="(data$ | async)?.speed"
             units="Km/h"
             highlights='[
               {"from": 100, "to": 120, "color": "rgba(255, 0, 0, .3)"}
@@ -74,7 +74,7 @@
             min-value="-5"
             max-value="5"
             major-ticks="-5,-4,-3,-2,-1,0,1,2,3,4,5"
-            [value]="(sensor$ | async)?.acceleration"
+            [value]="(data$ | async)?.acceleration"
             units="m/s²"
             highlights='[
               {"from": -5, "to": -3, "color": "rgba(255, 0, 0, .3)"},
@@ -90,7 +90,7 @@
           Msla
         </nb-card-header>
         <nb-card-body class="d-flex align-items-center justify-content-center">
-          <ngx-msla [value]="(sensor$ | async)?.msla" ></ngx-msla>
+          <ngx-msla [value]="(data$ | async)?.msla" ></ngx-msla>
         </nb-card-body>
       </nb-card>
     </div>
@@ -137,7 +137,7 @@
             border-shadow-width="0"
             animation-duration="1500"
             animation-target="plate"
-            [value]="(sensor$ | async)?.heading"
+            [value]="(data$ | async)?.heading"
           >
           </radial-gauge>
         </nb-card-body>
@@ -162,17 +162,19 @@
       <ngx-sensor-chart
         title="Temperature & Humidity"
         type="temperature"
-        battery="45"
+        [temperature]="(data$ | async)?.temperature"
+        [humidity]="(data$ | async)?.humidity"
+        [battery]="(data$ | async)?.temperatureBattery"
       ></ngx-sensor-chart>
     </div>
     <div class="col-xxl-3 col-md-6 col-sm-12">
       <ngx-sensor-chart
         title="Ammonia"
         type="ammonia"
-        [data]="ammoniaChartData"
+        [labels]="(data$ | async)?.labels"
+        [data]="(data$ | async)?.ammoniaChart"
+        [battery]="(data$ | async)?.ammoniaBattery"
         max="5000"
-        stepSize="100"
-        battery="57"
         unit="PPM"
       ></ngx-sensor-chart>
     </div>
@@ -180,8 +182,10 @@
       <ngx-sensor-chart
         title="Co2"
         type="co2"
-        [data]="co2ChartData"
-        max="2000"
+        [labels]="(data$ | async)?.labels"
+        [data]="(data$ | async)?.co2Chart"
+        [battery]="(data$ | async)?.co2Battery"
+        max="20000"
         min="150"
         battery="60"
         unit="PPM"
@@ -191,7 +195,9 @@
       <ngx-sensor-chart
         title="Vibration"
         type="vibration"
-        [data]="vibrationChartData"
+        [labels]="(data$ | async)?.labels"
+        [data]="(data$ | async)?.vibrationChart"
+        [battery]="(data$ | async)?.vibrationBattery"
         max="1"
         min="0"
         stepSize="0.1"
