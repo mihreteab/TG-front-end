@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import {GaugesModule} from 'ng-canvas-gauges';
 import { ChartModule } from 'angular2-chartjs';
+import { ChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './dashboard.component';
 import { ThemeModule } from '../../@theme/theme.module';
 import { NbCardModule, NbIconModule } from '@nebular/theme';
 import { MomentTimezoneModule } from 'angular-moment-timezone';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { LiveChartComponent } from './components/live-chart/live-chart.component';
 import { MslaComponent } from './components/msla/msla.component';
 import { SensorChartComponent } from '../components/sensor-chart/sensor-chart.component';
 
@@ -19,11 +19,11 @@ import { SensorChartComponent } from '../components/sensor-chart/sensor-chart.co
     GaugesModule,
     MomentTimezoneModule,
     ChartModule,
+    ChartsModule,
     NgxEchartsModule,
   ],
   declarations: [
     DashboardComponent,
-    LiveChartComponent,
     MslaComponent,
     SensorChartComponent
   ],

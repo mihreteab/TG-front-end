@@ -13,7 +13,7 @@
             min-value="-20"
             max-value="10"
             units="°C"
-            value="5"
+            [value]="temperature"
             major-ticks="-20,-15,-10,-5,0,5,10"
             highlights='[
               {"from": -20, "to": -10, "color": "rgba(255, 0, 0, .3)"}
@@ -25,14 +25,23 @@
             height="300"
             min-value="20"
             max-value="80"
-            value="50"
+            [value]="humidity"
             major-ticks="20,30,40,50,60,70,80"
             highlights='[
               {"from": 70, "to": 80, "color": "rgba(255, 0, 0, .3)"}
             ]'
           ></linear-gauge>
         </div>
-        <chart *ngIf="type !== 'temperature'" type="line" style="height: 300px;" [data]="data" [options]="options"></chart>
+        <canvas
+          *ngIf="type !== 'temperature'"
+          baseChart
+          chartType="line"
+          height="300"
+          [datasets]="data"
+          [options]="options"
+          [labels]="labels"
+          [colors]="colors"
+        ></canvas>
       </nb-card-body>
     </nb-card>
   </nb-card-front>
