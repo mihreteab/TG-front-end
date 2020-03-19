@@ -10,7 +10,6 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { MslaComponent } from './components/msla/msla.component';
 import { SensorChartComponent } from '../components/sensor-chart/sensor-chart.component';
 
-
 @NgModule({
   imports: [
     ThemeModule,

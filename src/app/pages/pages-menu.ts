@@ -6,4 +6,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/pages/dashboard',
   },
+  {
+    title: 'Sensors',
+    icon: 'shake-outline',
+    link: '/pages/sensors'
+  }
 ];

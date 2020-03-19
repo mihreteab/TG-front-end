@@ -1,8 +1,9 @@
 import { of as observableOf,  Observable } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Contacts, RecentUsers, UserData } from '../data/users';
-import { SensorData, SensorType } from '../data/sensor';
+import { SensorData, SensorType, IcdDevice, SensorDevice, SensorDeviceType } from '../data/sensor';
 
+import * as moment from 'moment-timezone';
 @Injectable()
 export class SensorService extends SensorData {
 
@@ -201,25 +202,206 @@ export class SensorService extends SensorData {
     ],
   };
 
-  private flipped = '';
-
-  changes:EventEmitter<any> = new EventEmitter();
-
   getSensor(): Observable<any> {
     return observableOf(this.sensor);
   }
-  
-  getFlipped(): Observable<string> {
-    return observableOf(this.flipped);
+
+  private devices: IcdDevice[] = [
+    {
+      label: 'Garmin Fleet 780',
+      value: 'gf780'
+    },
+    {
+      label: 'Samsung',
+      value: 'samsung'
+    },
+    {
+      label: 'TomTom Bridge',
+      value: 'ttb'
+    }
+  ]
+  private selectedDevice = 'gf780';
+  public selectedDeviceEvent: EventEmitter < string > = new EventEmitter();
+
+  private sensorDevices: SensorDevice[] = [
+    {
+      icd: 'gf780',
+      type: 'temperature',
+      name: 'Sensor 1',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+    {
+      icd: 'gf780',
+      type: 'humidity',
+      name: 'Sensor 2',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+    {
+      icd: 'gf780',
+      type: 'ammonia',
+      name: 'Sensor 3',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+    {
+      icd: 'gf780',
+      type: 'ammonia',
+      name: 'Sensor 4',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+    {
+      icd: 'gf780',
+      type: 'ammonia',
+      name: 'Sensor 5',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+    {
+      icd: 'gf780',
+      type: 'co2',
+      name: 'Sensor 6',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+    {
+      icd: 'gf780',
+      type: 'co2',
+      name: 'Sensor 7',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },{
+      icd: 'gf780',
+      type: 'co2',
+      name: 'Sensor 8',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+    {
+      icd: 'gf780',
+      type: 'vibration',
+      name: 'Sensor 9',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+    {
+      icd: 'gf780',
+      type: 'vibration',
+      name: 'Sensor 10',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+    {
+      icd: 'gf780',
+      type: 'vibration',
+      name: 'Sensor 11',
+      datasets: [],
+      battery: 0,
+      currentValue: 0
+    },
+
+  ]
+
+  private labels: string[] = [];
+
+  getDevices(): Observable<IcdDevice[]> {
+    return observableOf(this.devices);
   }
 
-  setFlipped(type: string): Observable<string> {
-    if (this.flipped === type) {
-      this.flipped = ''
+  getSelectedDevice(): Observable<string> {
+    return observableOf(this.selectedDevice)
+  }
+
+  setSelectedDevice(value: string): Observable<string> {
+    this.selectedDevice = value;
+    this.selectedDeviceEvent.emit(this.selectedDevice);
+    return observableOf(this.selectedDevice)
+  }
+
+  getSelectedSensors(): Observable<SensorDevice[]> {
+    const sensorDevices = this.sensorDevices.filter(item => item.icd === this.selectedDevice);
+    return observableOf(sensorDevices)
+  }
+
+  getLabels(): Observable<string[]> {
+    return observableOf(this.labels);
+  }
+
+  generateRandom (from: number, to: number,decimal: number = 0, random: number = Math.random()) {
+    if (decimal === 0) {
+      return Math.floor(random * (to - from)) + from;
     } else {
-      this.flipped = type;
+      return Number((random * (to - from) + from).toFixed(decimal))
     }
-    this.changes.emit(this.flipped);
-    return observableOf(this.flipped);
+  }
+
+  generateRandomDataByDeviceType (type: SensorDeviceType) {
+    if (type === 'temperature') {
+      return this.generateRandom(-20, 10);
+    }
+
+    if (type === 'humidity') {
+      return this.generateRandom(20, 80);
+    }
+
+    if (type === 'ammonia') {
+      return this.generateRandom(0, 5000);
+    }
+
+    if (type === 'co2') {
+      return this.generateRandom(150, 20000)
+    }
+
+    if (type === 'vibration') {
+      return this.generateRandom(0.01, 1, 2)
+    }
+
+    return 0;
+  }
+
+  generateRandomData(): Observable<SensorDevice[]> {
+    if (this.labels.length === 0) {
+      for (let i = 4; i >= 0; i -= 1) {
+        this.labels.push(moment().subtract(10 * i, 'seconds').format('hh:mm:ss'));
+      }
+    } else {
+      this.labels.shift()
+      this.labels.push(moment().format('hh:mm:ss'))
+    }
+    for (const sensorDevice of this.sensorDevices) {
+      if (sensorDevice.datasets.length === 0) {
+        const data = []
+        for (let i = 0; i < 5; i ++) {
+          const value = this.generateRandomDataByDeviceType(sensorDevice.type)
+          sensorDevice.currentValue = value;
+          data.push(value);
+        }
+
+        sensorDevice.datasets.push({
+          label: sensorDevice.name,
+          data: data
+        })
+      } else {
+        const value = this.generateRandomDataByDeviceType(sensorDevice.type);
+        sensorDevice.datasets[0].data.shift();
+        sensorDevice.datasets[0].data.push(value);
+        sensorDevice.currentValue = value;
+      }
+      sensorDevice.battery = this.generateRandom(0, 100)
+    }
+    const sensorDevices = this.sensorDevices.filter(item => item.icd === this.selectedDevice);
+    return observableOf(sensorDevices)
   }
 }

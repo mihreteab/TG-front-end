@@ -27,8 +27,28 @@ export interface ReadingType {
   vibration: number;
 }
 
+export type SensorDeviceType = 'temperature' | 'humidity' | 'ammonia' | 'co2' | 'vibration';
+export type IcdDeviceType = 'gf780' | 'samsung' | 'ttb';
+
+export interface IcdDevice {
+  label: string;
+  value: IcdDeviceType;
+}
+
+
+export interface SensorDevice {
+  name: string;
+  icd: string;
+  type: SensorDeviceType;
+  datasets: any[];
+  battery: number;
+  currentValue: number;
+}
+
 export abstract class SensorData {
   abstract getSensor(): Observable<SensorType>;
-  abstract getFlipped(): Observable<string>;
-  abstract setFlipped(type: string): Observable<string>;
+  abstract getDevices(): Observable<IcdDevice[]>;
+  abstract getSelectedDevice(): Observable<string>;
+  abstract setSelectedDevice(value: string): Observable<string>;
+  abstract getSelectedSensors(): Observable<SensorDevice[]>;
 }

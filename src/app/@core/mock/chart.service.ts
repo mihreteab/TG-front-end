@@ -44,6 +44,7 @@ export class ChartService {
   }
 
   generateInitialLabels () {
+    this.labels = []
     for (let i = 4; i >= 0; i -= 1) {
       this.labels.push(moment().subtract(10 * i, 'seconds').format('hh:mm:ss'));
     }
