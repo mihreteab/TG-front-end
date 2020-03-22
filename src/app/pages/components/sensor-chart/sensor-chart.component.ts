@@ -15,13 +15,14 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
   @Input() maintainAspectRatio: boolean = false;
   @Input() aspectRatio: number = 2;
   @Input() min: number | string = 0;
-  @Input() max: number | string = 100;
+  @Input() max: number;
   @Input() type: string = '';
   @Input() battery: number = 0;
   @Input() unit: string = '';
   @Input() stepSize: number = 100;
   @Input() temperature: number = 0;
   @Input() humidity: number = 0;
+  @Input() displayLegend = true;
 
   options: any = {};
   chartData: any = {};
@@ -52,8 +53,8 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
     const chartjs = this.variables.chartjs;
     this.colors = [
       {
-        backgroundColor: NbColorHelper.hexToRgbA(this.variables.primary, 0.3),
-        borderColor: this.variables.primary,
+        backgroundColor: NbColorHelper.hexToRgbA(this.variables.success, 0.3),
+        borderColor: this.variables.success,
       },
       {
         backgroundColor: NbColorHelper.hexToRgbA(this.variables.danger, 0.3),
@@ -100,14 +101,15 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
               color: [chartjs.axisLineColor, 'red']
             },
             ticks: {
-              // stepSize: this.stepSize,
-              max: typeof this.max === 'number' ? this.max : parseInt(this.max),
+              min: typeof this.min === 'number' ? this.min : parseInt(this.min) || undefined,
+              max: typeof this.max === 'number' ? this.max : parseInt(this.max) || undefined,
               fontColor: chartjs.textColor,
             },
           },
         ],
       },
       legend: {
+        display: this.displayLegend,
         labels: {
           fontColor: chartjs.textColor,
         },
@@ -117,7 +119,10 @@ export class SensorChartComponent implements OnInit, OnDestroy, AfterViewInit, O
   }
 
   generateBatteryOptions () {
-    const visitorsPie: any = this.variables.visitorsPie;
+    if (!this.variables) {
+      return;
+    }
+    const visitorsPie: any = this.variables && this.variables.visitorsPie;
 
     this.batteryOptions = {
       tooltip: {

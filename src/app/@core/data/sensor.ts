@@ -43,6 +43,9 @@ export interface SensorDevice {
   datasets: any[];
   battery: number;
   currentValue: number;
+  unit: string;
+  min: number;
+  max: number;
 }
 
 export abstract class SensorData {

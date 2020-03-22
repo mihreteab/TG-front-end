@@ -1,6 +1,5 @@
 import { of as observableOf,  Observable } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
-import { Contacts, RecentUsers, UserData } from '../data/users';
 import { SensorData, SensorType, IcdDevice, SensorDevice, SensorDeviceType } from '../data/sensor';
 
 import * as moment from 'moment-timezone';
@@ -230,7 +229,10 @@ export class SensorService extends SensorData {
       name: 'Sensor 1',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: '°C',
+      min: -20,
+      max: 10,
     },
     {
       icd: 'gf780',
@@ -238,7 +240,10 @@ export class SensorService extends SensorData {
       name: 'Sensor 2',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: '%',
+      min:  20,
+      max: 80,
     },
     {
       icd: 'gf780',
@@ -246,7 +251,10 @@ export class SensorService extends SensorData {
       name: 'Sensor 3',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: 'PPM',
+      min: 1,
+      max: 5000
     },
     {
       icd: 'gf780',
@@ -254,7 +262,10 @@ export class SensorService extends SensorData {
       name: 'Sensor 4',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: 'PPM',
+      min: 1,
+      max: 5000
     },
     {
       icd: 'gf780',
@@ -262,7 +273,10 @@ export class SensorService extends SensorData {
       name: 'Sensor 5',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: 'PPM',
+      min: 1,
+      max: 5000
     },
     {
       icd: 'gf780',
@@ -270,7 +284,10 @@ export class SensorService extends SensorData {
       name: 'Sensor 6',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: 'PPM',
+      min: 150,
+      max: 20000
     },
     {
       icd: 'gf780',
@@ -278,14 +295,20 @@ export class SensorService extends SensorData {
       name: 'Sensor 7',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: 'PPM',
+      min: 150,
+      max: 20000
     },{
       icd: 'gf780',
       type: 'co2',
       name: 'Sensor 8',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: 'PPM',
+      min: 150,
+      max: 20000
     },
     {
       icd: 'gf780',
@@ -293,7 +316,10 @@ export class SensorService extends SensorData {
       name: 'Sensor 9',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: 'KHz',
+      min: 0.01,
+      max: 1
     },
     {
       icd: 'gf780',
@@ -301,7 +327,10 @@ export class SensorService extends SensorData {
       name: 'Sensor 10',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: 'KHz',
+      min: 0.01,
+      max: 1
     },
     {
       icd: 'gf780',
@@ -309,7 +338,120 @@ export class SensorService extends SensorData {
       name: 'Sensor 11',
       datasets: [],
       battery: 0,
-      currentValue: 0
+      currentValue: 0,
+      unit: 'KHz',
+      min: 0.01,
+      max: 1
+    },
+    {
+      icd: 'samsung',
+      type: 'temperature',
+      name: 'Sensor 12',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: '°C',
+      min: -20,
+      max: 10,
+    },
+    {
+      icd: 'samsung',
+      type: 'humidity',
+      name: 'Sensor 13',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: '%',
+      min:  20,
+      max: 80,
+    },
+    {
+      icd: 'samsung',
+      type: 'ammonia',
+      name: 'Sensor 14',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: 'PPM',
+      min: 1,
+      max: 5000
+    },
+    {
+      icd: 'samsung',
+      type: 'co2',
+      name: 'Sensor 15',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: 'PPM',
+      min: 150,
+      max: 20000
+    },
+    {
+      icd: 'samsung',
+      type: 'vibration',
+      name: 'Sensor 16',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: 'KHz',
+      min: 0.01,
+      max: 1
+    },
+    {
+      icd: 'ttb',
+      type: 'temperature',
+      name: 'Sensor 17',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: '°C',
+      min: -20,
+      max: 10,
+    },
+    {
+      icd: 'ttb',
+      type: 'humidity',
+      name: 'Sensor 18',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: '%',
+      min:  20,
+      max: 80,
+    },
+    {
+      icd: 'ttb',
+      type: 'ammonia',
+      name: 'Sensor 19',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: 'PPM',
+      min: 1,
+      max: 5000
+    },
+    {
+      icd: 'ttb',
+      type: 'co2',
+      name: 'Sensor 20',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: 'PPM',
+      min: 150,
+      max: 20000
+    },
+    {
+      icd: 'ttb',
+      type: 'vibration',
+      name: 'Sensor 21',
+      datasets: [],
+      battery: 0,
+      currentValue: 0,
+      unit: 'KHz',
+      min: 0.01,
+      max: 1
     },
 
   ]
@@ -357,7 +499,7 @@ export class SensorService extends SensorData {
     }
 
     if (type === 'ammonia') {
-      return this.generateRandom(0, 5000);
+      return this.generateRandom(1, 5000);
     }
 
     if (type === 'co2') {

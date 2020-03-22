@@ -1,15 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SensorsComponent } from './sensors.component';
-import { NbCardModule } from '@nebular/theme';
-// import { SensorChartComponent } from '../components/sensor-chart/sensor-chart.component';
+import { NbCardModule, NbSelectModule } from '@nebular/theme';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
     SensorsComponent,
-    // SensorChartComponent
   ],
   imports: [
-    NbCardModule
+    CommonModule,
+    NbCardModule,
+    NbSelectModule,
+    ComponentsModule
   ]
 })
 export class SensorsModule { }

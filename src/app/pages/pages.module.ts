@@ -17,8 +17,8 @@ import { SensorsModule } from './sensors/sensors.module';
     NbMenuModule,
     NgxEchartsModule,
     ChartsModule,
-    DashboardModule,
     MiscellaneousModule,
+    DashboardModule,
     SensorsModule,
   ],
   declarations: [
