@@ -1,5 +1,5 @@
 import { of as observableOf,  Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Contacts, RecentUsers, UserData } from '../data/users';
 
 @Injectable()
@@ -22,6 +22,7 @@ export class UserService extends UserData {
     home: 'home',
     work: 'work',
   };
+
   private contacts: Contacts[] = [
     { user: this.users.kate, type: this.types.work },
   ];

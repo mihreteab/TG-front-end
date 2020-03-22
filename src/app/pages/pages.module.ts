@@ -8,16 +8,18 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ChartsModule } from 'ng2-charts';
+import { SensorsModule } from './sensors/sensors.module';
 
 @NgModule({
   imports: [
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
-    DashboardModule,
-    MiscellaneousModule,
     NgxEchartsModule,
-    ChartsModule
+    ChartsModule,
+    MiscellaneousModule,
+    DashboardModule,
+    SensorsModule,
   ],
   declarations: [
     PagesComponent,

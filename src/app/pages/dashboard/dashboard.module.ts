@@ -9,7 +9,7 @@ import { MomentTimezoneModule } from 'angular-moment-timezone';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { MslaComponent } from './components/msla/msla.component';
 import { SensorChartComponent } from '../components/sensor-chart/sensor-chart.component';
-
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   imports: [
@@ -21,11 +21,11 @@ import { SensorChartComponent } from '../components/sensor-chart/sensor-chart.co
     ChartModule,
     ChartsModule,
     NgxEchartsModule,
+    ComponentsModule
   ],
   declarations: [
     DashboardComponent,
     MslaComponent,
-    SensorChartComponent
   ],
 })
 export class DashboardModule { }

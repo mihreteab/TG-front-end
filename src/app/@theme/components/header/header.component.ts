@@ -5,6 +5,8 @@ import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UserService } from '../../../@core/mock/users.service';
+import { SensorService } from '../../../@core/mock/sensor.service';
 
 @Component({
   selector: 'ngx-header',
@@ -17,22 +19,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly: boolean = false;
   user: any;
 
-  devices = [
-    {
-      value: 'Garmin Fleet 780',
-      label: 'Garmin Fleet 780'
-    },
-    {
-      value: 'Samsung',
-      label: 'Samsung'
-    },
-    {
-      value: 'TomTom Bridge',
-      label: 'TomTom Bridge'
-    }
-  ]
+  devices$: any;
 
-  currentDevice = 'Garmin Fleet 780';
+  currentDevice$: any;
 
   themes = [
     {
@@ -60,7 +49,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
-              private userService: UserData,
+              private userService: UserService,
+              private sensorService: SensorService,
               private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService) {
   }
@@ -86,6 +76,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+    this.devices$ = this.sensorService.getDevices();
+    this.currentDevice$ = this.sensorService.getSelectedDevice();
   }
 
   ngOnDestroy() {
@@ -94,7 +87,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   changeDevice(deviceName: string) {
-
+    this.sensorService.setSelectedDevice(deviceName);
   }
 
   changeTheme(themeName: string) {

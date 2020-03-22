@@ -39,7 +39,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   vibrationChartData: any = {};
 
   currentTime: any = moment().format('hh:mm');
-  currentTimeZone: any = new Date().getTimezoneOffset() / - 60
+  currentTimeZone: any = new Date().getTimezoneOffset() / - 60;
+  interval: any;
 
   constructor(
     private sensorService: SensorService,
@@ -137,7 +138,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       this.data$ = this.chartService.getInitialLiveChartData()
-      setInterval(() => {
+      this.interval = setInterval(() => {
         this.data$ = this.chartService.getLiveChartData();
         this.currentTime = moment().format('hh:mm')
       }, 10000)
@@ -185,5 +186,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    clearInterval(this.interval)
   }
 }
