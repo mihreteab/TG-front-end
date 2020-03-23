@@ -43,6 +43,11 @@ export class SensorsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.theme.getJsTheme().subscribe(config => {
       this.labels$ = this.sensorService.getLabels();
+      this.sensorService.selectedDeviceEvent.subscribe(res => {
+        this.sensorService.generateRandomData().subscribe(res => {
+          this.devices = _.sortBy(res, this.sortBy);
+        });
+      });
       this.sensorService.generateRandomData().subscribe(res => {
         this.devices = _.sortBy(res, this.sortBy);
       });
