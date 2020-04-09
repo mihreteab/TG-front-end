@@ -14,7 +14,22 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Settings',
     icon: 'settings-outline',
-    link: '/pages/settings'
+    children: [
+      {
+        title: 'User Account',
+        link: '/pages/setting/account',
+      },
+    ]
+  },
+  {
+    title: 'Maps',
+    icon: 'map-outline',
+    children: [
+      {
+        title: 'Google map',
+        link: '/pages/maps/google_map',
+      },
+    ]
   },
   {
     title: 'Historical',
