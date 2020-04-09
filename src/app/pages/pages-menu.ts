@@ -8,7 +8,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Sensors',
-    icon: 'shake-outline',
+    icon: 'activity-outline',
     link: '/pages/sensors'
+  },
+  {
+    title: 'Settings',
+    icon: 'settings-outline',
+    link: '/pages/settings'
+  },
+  {
+    title: 'Historical',
+    icon: 'pie-chart-outline',
+    link: '/pages/historical'
   }
 ];

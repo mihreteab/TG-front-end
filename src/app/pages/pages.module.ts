@@ -9,6 +9,8 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ChartsModule } from 'ng2-charts';
 import { SensorsModule } from './sensors/sensors.module';
+import { SettingComponent } from './setting/setting.component';
+import { HistoricalComponent } from './historical/historical.component';
 
 @NgModule({
   imports: [
@@ -23,6 +25,8 @@ import { SensorsModule } from './sensors/sensors.module';
   ],
   declarations: [
     PagesComponent,
+    SettingComponent,
+    HistoricalComponent,
   ],
 })
 export class PagesModule {
