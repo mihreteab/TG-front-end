@@ -9,10 +9,11 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ChartsModule } from 'ng2-charts';
 import { SensorsModule } from './sensors/sensors.module';
-import { SettingComponent } from './setting/setting.component';
 import { HistoricalComponent } from './historical/historical.component';
-import { MapsComponent } from './maps/maps.component';
-import { UserAccountComponent } from './user-account/user-account.component';
+import { SettingComponent } from './setting/setting.component';
+import { UserAccountComponent } from './setting/user-account/user-account.component';
+import { MapComponent } from './map/map.component';
+import { GoogleMapComponent } from './map/google-map/google-map.component';
 
 @NgModule({
   imports: [
@@ -27,10 +28,11 @@ import { UserAccountComponent } from './user-account/user-account.component';
   ],
   declarations: [
     PagesComponent,
-    SettingComponent,
     HistoricalComponent,
-    MapsComponent,
+    SettingComponent,
     UserAccountComponent,
+    MapComponent,
+    GoogleMapComponent,
   ],
 })
 export class PagesModule {

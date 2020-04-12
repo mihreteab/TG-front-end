@@ -17,7 +17,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'User Account',
-        link: '/pages/setting/account',
+        link: '/pages/setting/user-account',
       },
     ]
   },
@@ -27,7 +27,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Google map',
-        link: '/pages/maps/google_map',
+        link: '/pages/maps/google-map',
       },
     ]
   },

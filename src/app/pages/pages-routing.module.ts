@@ -5,20 +5,40 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { SensorsComponent } from './sensors/sensors.component';
+import { HistoricalComponent } from './historical/historical.component';
 import { SettingComponent } from './setting/setting.component';
-import { HistoricalComponent } from './historical/historical.component'
+import { UserAccountComponent } from  './setting/user-account/user-account.component';
+import { MapComponent } from './map/map.component';
+import { GoogleMapComponent } from './map/google-map/google-map.component';
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
     {
-      path: 'settings',
-      component: SettingComponent,
-    },
-    {
       path: 'historical',
       component: HistoricalComponent,
+    },
+    {
+      path: 'setting',
+      component: SettingComponent,
+      children:[
+        {
+          path: 'user-account',
+          component: UserAccountComponent,
+        },
+      ]
+
+    },
+    {
+      path: 'maps',
+      component: MapComponent,
+      children: [
+        {
+          path: 'google-map',
+          component: GoogleMapComponent
+        }
+      ]
     },
     {
       path: 'dashboard',
