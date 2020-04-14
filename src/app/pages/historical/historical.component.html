@@ -1,1 +1,41 @@
-<p>historical works!</p>
+<div>
+    <div class="row">
+        <div class="col-lg-4">
+            <nb-card>
+                <nb-card-header>Start</nb-card-header>
+                <nb-card-body>
+                    <ngx-datepicker></ngx-datepicker>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-lg-4">
+            <nb-card>
+                <nb-card-header>End</nb-card-header>
+                <nb-card-body>
+                    <ngx-datepicker></ngx-datepicker>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-lg-4">
+            <ngx-dropdown></ngx-dropdown>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-xxl-3 col-md-6 col-sm-12" *ngFor="let device of devices">
+              <ngx-sensor-chart
+                [title]="device.name"
+                type="device.type"
+                [labels]="(labels$ | async)"
+                [data]="device.datasets"
+                [battery]="device.battery"
+                [unit]="lodash.startCase(device.type) + ' / ' + device.unit"
+                [min]="device.min"
+                [max]="device.max"
+                [displayLegend]="false"
+              ></ngx-sensor-chart>
+            </div>
+          </div>
+    </div>
+</div>
+

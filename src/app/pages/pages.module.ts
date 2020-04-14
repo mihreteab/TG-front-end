@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule } from '@nebular/theme';
+import { NbMenuModule, NbCardModule, NbDatepicker, NbDatepickerModule, NbSelectModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -14,10 +14,19 @@ import { SettingComponent } from './setting/setting.component';
 import { UserAccountComponent } from './setting/user-account/user-account.component';
 import { MapComponent } from './map/map.component';
 import { GoogleMapComponent } from './map/google-map/google-map.component';
+import { DatepickerComponent } from './historical/datepicker/datepicker.component';
+import { DropdownComponent } from './historical/dropdown/dropdown.component';
+import { CommonModule } from '@angular/common';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
   imports: [
+    CommonModule,
+    ComponentsModule,
     PagesRoutingModule,
+    NbCardModule,
+    NbSelectModule,
+    NbDatepickerModule,
     ThemeModule,
     NbMenuModule,
     NgxEchartsModule,
@@ -33,6 +42,8 @@ import { GoogleMapComponent } from './map/google-map/google-map.component';
     UserAccountComponent,
     MapComponent,
     GoogleMapComponent,
+    DatepickerComponent,
+    DropdownComponent,
   ],
 })
 export class PagesModule {
