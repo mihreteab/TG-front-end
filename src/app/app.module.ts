@@ -20,9 +20,19 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { LoginComponent } from './auth/login/login.component';
+import { AuthComponent } from './auth/auth.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    AuthComponent,
+    SignupComponent,
+    ForgotPasswordComponent,
+   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
