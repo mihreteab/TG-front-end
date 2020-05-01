@@ -35,5 +35,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Historical',
     icon: 'pie-chart-outline',
     link: '/pages/historical'
+  },
+  {
+    title: 'Report',
+    icon: 'archive-outline',
+    link: '/pages/report'
   }
 ];

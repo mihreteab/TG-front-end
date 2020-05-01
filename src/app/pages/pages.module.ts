@@ -18,9 +18,13 @@ import { DatepickerComponent } from './historical/datepicker/datepicker.componen
 import { DropdownComponent } from './historical/dropdown/dropdown.component';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from './components/components.module';
+import { ReportComponent } from './report/report.component';
+import { ReportTypeComponent } from './report/report-type/report-type.component';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
   imports: [
+    NbEvaIconsModule,
     CommonModule,
     ComponentsModule,
     PagesRoutingModule,
@@ -44,6 +48,8 @@ import { ComponentsModule } from './components/components.module';
     GoogleMapComponent,
     DatepickerComponent,
     DropdownComponent,
+    ReportComponent,
+    ReportTypeComponent,
   ],
 })
 export class PagesModule {

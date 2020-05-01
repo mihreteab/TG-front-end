@@ -10,6 +10,7 @@ import { SettingComponent } from './setting/setting.component';
 import { UserAccountComponent } from  './setting/user-account/user-account.component';
 import { MapComponent } from './map/map.component';
 import { GoogleMapComponent } from './map/google-map/google-map.component';
+import { ReportComponent } from './report/report.component';
 
 const routes: Routes = [{
   path: '',
@@ -47,6 +48,10 @@ const routes: Routes = [{
     {
       path: 'sensors',
       component: SensorsComponent,
+    },
+    {
+      path: 'report',
+      component: ReportComponent,
     },
     {
       path: '',

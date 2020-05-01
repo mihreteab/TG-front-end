@@ -1,0 +1,10 @@
+<div>
+    <nb-card>
+        <nb-card-header>Sort</nb-card-header>
+        <nb-card-body>
+          <nb-select [selected]="sortBy" (selectedChange)="changeSort($event)" status="success">
+            <nb-option *ngFor="let item of sortData" [value]="item.value"> {{ item.label }}</nb-option>
+          </nb-select>
+        </nb-card-body>
+      </nb-card>
+</div>
