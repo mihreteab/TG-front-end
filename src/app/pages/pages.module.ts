@@ -21,6 +21,11 @@ import { ComponentsModule } from './components/components.module';
 import { ReportComponent } from './report/report.component';
 import { ReportTypeComponent } from './report/report-type/report-type.component';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { ReportPdfComponent } from './report/report-pdf/report-pdf.component';
+import { ReportCsvComponent } from './report/report-csv/report-csv.component';
+import { ReportHtmlComponent } from './report/report-html/report-html.component';
+import { CsvViewComponent } from './report/report-csv/csv-view/csv-view.component';
+import { CsvListComponent } from './report/report-csv/csv-list/csv-list.component';
 
 @NgModule({
   imports: [
@@ -50,6 +55,11 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     DropdownComponent,
     ReportComponent,
     ReportTypeComponent,
+    ReportPdfComponent,
+    ReportCsvComponent,
+    ReportHtmlComponent,
+    CsvViewComponent,
+    CsvListComponent,
   ],
 })
 export class PagesModule {

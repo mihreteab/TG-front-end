@@ -17,16 +17,12 @@ export class ReportComponent implements OnInit, OnDestroy {
   private lodash = _;
   private sortData = [
     {
-      label: 'PDF',
-      value: 'pdf'
+      label: 'DATE',
+      value: 'date'
     },
     {
-      label: 'CSV',
-      value: 'csv'
-    },
-    {
-      label: 'HTML',
-      value: 'html'
+      label: 'SIZE',
+      value: 'size'
     },
   ];
 

@@ -11,6 +11,11 @@ import { UserAccountComponent } from  './setting/user-account/user-account.compo
 import { MapComponent } from './map/map.component';
 import { GoogleMapComponent } from './map/google-map/google-map.component';
 import { ReportComponent } from './report/report.component';
+import { ReportHtmlComponent } from './report/report-html/report-html.component';
+import { ReportCsvComponent } from './report/report-csv/report-csv.component';
+import { ReportPdfComponent } from './report/report-pdf/report-pdf.component';
+import { CsvViewComponent } from './report/report-csv/csv-view/csv-view.component';
+import { CsvListComponent } from './report/report-csv/csv-list/csv-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -52,6 +57,31 @@ const routes: Routes = [{
     {
       path: 'report',
       component: ReportComponent,
+      children:[
+        {
+          path: 'html',
+          component: ReportHtmlComponent,
+        },
+        {
+          path: 'csv',
+          component: ReportCsvComponent,
+          children:[
+            {
+              path: '',
+              component: CsvListComponent
+            },
+            {
+              path: 'view',
+              component: CsvViewComponent
+            }
+
+          ]
+        },
+        {
+          path: 'pdf',
+          component: ReportPdfComponent,
+        },
+      ]
     },
     {
       path: '',

@@ -8,20 +8,16 @@ import { Component, OnInit } from '@angular/core';
 export class ReportTypeComponent {
   private sortData = [
     {
-      label: 'PDF',
-      value: 'pdf'
+      label: 'DATE',
+      value: 'date'
     },
     {
-      label: 'HTML',
-      value: 'html'
+      label: 'SIZE',
+      value: 'size'
     },
-    {
-      label: 'CSV',
-      value: 'csv'
-    }
   ]
 
-  private sortBy = 'pdf';
+  private sortBy = 'date';
 
   selectedItem = '0';
 

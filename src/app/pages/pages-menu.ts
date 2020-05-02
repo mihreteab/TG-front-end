@@ -39,6 +39,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Report',
     icon: 'archive-outline',
-    link: '/pages/report'
+    children: [
+      {
+        title: 'HTML',
+        link: '/pages/report/html',
+      },
+      {
+        title: 'CSV',
+        link: '/pages/report/csv',
+      },
+      {
+        title: 'PDF',
+        link: '/pages/report/pdf',
+      },
+
+
+    ]
   }
 ];
