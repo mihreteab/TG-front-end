@@ -26,6 +26,7 @@ import { ReportCsvComponent } from './report/report-csv/report-csv.component';
 import { ReportHtmlComponent } from './report/report-html/report-html.component';
 import { CsvViewComponent } from './report/report-csv/csv-view/csv-view.component';
 import { CsvListComponent } from './report/report-csv/csv-list/csv-list.component';
+import { AdvancedPieChartComponent } from './report/report-html/advanced-pie-chart/advanced-pie-chart.component';
 
 @NgModule({
   imports: [
@@ -60,6 +61,7 @@ import { CsvListComponent } from './report/report-csv/csv-list/csv-list.componen
     ReportHtmlComponent,
     CsvViewComponent,
     CsvListComponent,
+    AdvancedPieChartComponent,
   ],
 })
 export class PagesModule {
